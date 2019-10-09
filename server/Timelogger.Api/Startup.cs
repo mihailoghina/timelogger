@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Timelogger.Entities;
+using System;
+using System.IO;
 
 namespace Timelogger.Api
 {
@@ -65,8 +67,11 @@ namespace Timelogger.Api
 		{
 			var testProject1 = new Project
 			{
-				Id = 1,
-				Name = "e-conomic Interview"
+				Id = Guid.Parse("b8b939ba-b8b0-43e6-a80f-43cb47d3ab54"),
+				Name = "e-conomic Interview",
+				CreationDate = DateTime.Now,
+				DeadLineDate = DateTime.Now,
+				CreatedBy = Guid.Parse("b808360d-6e6d-4162-b253-d81518d5daf8")
 			};
 
 			context.Projects.Add(testProject1);

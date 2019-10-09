@@ -1,9 +1,16 @@
-﻿namespace Timelogger.Entities
+﻿using System;
+using System.IO;
+
+namespace Timelogger.Entities
 {
 	public class Project
 	{
-		public int Id { get; set; }
+		public Guid Id { get; set; }
 		public string Name { get; set; }
-		public bool IsComplete {get; set; }
+		public bool IsComplete { get; set; }
+		public Guid CreatedBy { get; set; }
+		public DateTime CreationDate { get; set; }
+		public DateTime DeadLineDate { get; set; }
+
 	}
 }
