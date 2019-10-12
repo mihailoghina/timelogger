@@ -6,8 +6,6 @@ namespace Timelogger.Entities
 	public class RecordUpdateDTO
 	{   
         [Required]
-        public Guid ActivityId { get; set; }
-        [Required]
         [MinLength(30, ErrorMessage="Minimum logged time must exceed 30 minutes")]
         public int LoggedMinutes { get; set; }
         [Required]

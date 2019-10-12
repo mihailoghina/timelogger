@@ -140,7 +140,7 @@ namespace Timelogger.Api.Controllers
 				return BadRequest(errors);
 			}
 
-			var project = _projectRepository.GetById(id);
+			var project = _projectRepository.GetById(activity.ProjectId);
 
 			//prevent modifying activities and later time records of a project which has been completed.
 			//completed projects can be only deleted together with its activities and records

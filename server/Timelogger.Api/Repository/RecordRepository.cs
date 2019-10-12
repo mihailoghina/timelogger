@@ -6,39 +6,39 @@ using Microsoft.Extensions.Logging;
 
 namespace Timelogger.Api.Repository
 {
-    public class ProjectsRepository : IProjectsRepository
+    public class RecordRepository : IRecordRepository
     {
         private readonly ApiContext _context;
         private readonly ILogger _logger;
 
-        public ProjectsRepository(ApiContext context, ILogger<ProjectsRepository> logger) 
+        public RecordRepository(ApiContext context, ILogger<RecordRepository> logger) 
         {
             _context = context;
             _logger = logger;
         } 
 
-        public IEnumerable<Project> GetAll() 
+        public IEnumerable<Record> GetAll() 
         {
-            return _context.Projects.OrderBy(_ => _.DeadLineDate);
+            return _context.Records;
         } 
-        public Project GetById(Guid id)
+        public Record GetById(Guid id)
         {
-            return _context.Projects.SingleOrDefault(_ => _.Id == id);
+            return _context.Records.SingleOrDefault(_ => _.Id == id);
         } 
 
-        public Project Add(Project project) 
+        public Record Add(Record record) 
         {
-            _context.Projects.Add(project);
+            _context.Records.Add(record);
             if (PersistDbChanges())
             {
-                 return project;
+                 return record;
             }
-            return (Project)null;          
+            return (Record)null;          
         }
 
-        public bool Delete(Project project) 
+        public bool Delete(Record record) 
         {
-            _context.Projects.Remove(project);
+            _context.Records.Remove(record);
             return PersistDbChanges();
         }
 
@@ -55,9 +55,9 @@ namespace Timelogger.Api.Repository
             }        
         }
 
-        public bool Update(Project project)
+        public bool Update(Record record)
         {
-            _context.Projects.Update(project);
+            _context.Records.Update(record);
             return PersistDbChanges();
         }
     }

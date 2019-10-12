@@ -9,8 +9,8 @@ namespace Timelogger.Api.Repository
         IEnumerable<Activity> GetAll();
         Activity GetById(Guid id);
         Activity Add(Activity activity);
-        bool Delete(Activity project);
-        bool Update(Activity project);
+        bool Delete(Activity activity);
+        bool Update(Activity activity);
         bool PersistDbChanges();
     }
 }
