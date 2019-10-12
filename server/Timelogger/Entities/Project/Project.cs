@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Timelogger.Entities
 {
@@ -10,6 +11,6 @@ namespace Timelogger.Entities
 		public Guid CreatedBy { get; set; }
 		public DateTime CreationDate { get; set; }
 		public DateTime DeadLineDate { get; set; }
-
+		public IEnumerable<Activity> ProjectActivities { get; set; }
 	}
 }

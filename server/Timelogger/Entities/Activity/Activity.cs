@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Timelogger.Entities
 {
@@ -10,5 +11,6 @@ namespace Timelogger.Entities
         public string Description { get; set; }
 		public Guid CreatedBy { get; set; }
 		public DateTime CreationDate { get; set; }
+		public IEnumerable<Record> ActivityRecords { get; set; }
 	}
 }

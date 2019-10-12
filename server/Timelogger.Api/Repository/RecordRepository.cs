@@ -16,6 +16,11 @@ namespace Timelogger.Api.Repository
             _context = context;
             _logger = logger;
         } 
+     
+        public IEnumerable<Record> GetEntitiesForParentId(Guid activityId)
+        {
+            return _context.Records.Where(_ => _.ActivityId == activityId);
+        }
 
         public IEnumerable<Record> GetAll() 
         {

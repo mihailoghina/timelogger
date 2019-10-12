@@ -6,8 +6,9 @@ namespace Timelogger.Api.Repository
 {
     public interface IActivityRepository
     {
-        IEnumerable<Activity> GetAll();
-        Activity GetById(Guid id);
+        IEnumerable<Activity> GetAll(bool includeChildren = false);
+        IEnumerable<Activity> GetEntitiesForParentId(Guid projectId, bool includeChildren = false);
+        Activity GetById(Guid id, bool includeChildren = false);
         Activity Add(Activity activity);
         bool Delete(Activity activity);
         bool Update(Activity activity);

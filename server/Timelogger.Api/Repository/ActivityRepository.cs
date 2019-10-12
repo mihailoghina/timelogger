@@ -10,20 +10,48 @@ namespace Timelogger.Api.Repository
     {
         private readonly ApiContext _context;
         private readonly ILogger _logger;
+        private readonly IRecordRepository _recordRepository;
 
-        public ActivityRepository(ApiContext context, ILogger<ActivityRepository> logger) 
+        public ActivityRepository(ApiContext context, ILogger<ActivityRepository> logger, IRecordRepository recordRepository) 
         {
             _context = context;
             _logger = logger;
+            _recordRepository = recordRepository;
         } 
 
-        public IEnumerable<Activity> GetAll() 
+        public IEnumerable<Activity> GetEntitiesForParentId(Guid projectId, bool includeChildren = false)
         {
-            return _context.Activities;
+            List<Activity> activities = _context.Activities.Where(_ => _.ProjectId == projectId).ToList();
+
+            if(includeChildren && activities.Any())
+            {
+                activities = activities.Select(x => { x.ActivityRecords = _recordRepository.GetEntitiesForParentId(x.Id); return x; }).ToList();
+            }
+
+            return activities;
+        }
+
+        public IEnumerable<Activity> GetAll(bool includeChildren = false) 
+        {
+            List<Activity> activities = _context.Activities.ToList();
+
+            if(includeChildren && activities.Any())
+            {
+                activities = activities.Select(x => { x.ActivityRecords = _recordRepository.GetEntitiesForParentId(x.Id); return x; }).ToList();
+            }
+
+            return activities;
         } 
-        public Activity GetById(Guid id)
+        public Activity GetById(Guid id, bool includeChildren = false)
         {
-            return _context.Activities.SingleOrDefault(_ => _.Id == id);
+            Activity activity = _context.Activities.SingleOrDefault(_ => _.Id == id);
+
+            if(includeChildren && activity != null)
+            {
+                activity.ActivityRecords = _recordRepository.GetEntitiesForParentId(id);
+            }
+
+            return activity;
         } 
 
         public Activity Add(Activity activity) 
@@ -60,5 +88,7 @@ namespace Timelogger.Api.Repository
             _context.Activities.Update(activity);
             return PersistDbChanges();
         }
+
+        
     }
 }

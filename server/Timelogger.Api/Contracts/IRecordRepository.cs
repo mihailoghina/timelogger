@@ -7,6 +7,7 @@ namespace Timelogger.Api.Repository
     public interface IRecordRepository
     {
         IEnumerable<Record> GetAll();
+        IEnumerable<Record> GetEntitiesForParentId(Guid activityId);
         Record GetById(Guid id);
         Record Add(Record record);
         bool Delete(Record record);

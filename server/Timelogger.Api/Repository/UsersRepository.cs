@@ -10,35 +10,34 @@ namespace Timelogger.Api.Repository
     {
         private readonly ApiContext _context;
         private readonly ILogger _logger;
+        private readonly IProjectsRepository _projectsRepository;
 
-        public UsersRepository(ApiContext context, ILogger<UsersRepository> logger) 
+        public UsersRepository(ApiContext context, ILogger<UsersRepository> logger, IProjectsRepository projectsRepository) 
         {
             _context = context;
             _logger = logger;
+            _projectsRepository = projectsRepository;
         } 
 
-        public IEnumerable<User> GetAll(bool includeUserProjects = false) 
+        public IEnumerable<User> GetAll(bool includeChildren = false) 
         {
             List<User> usersList = _context.Users.ToList();
             
-            if(includeUserProjects && usersList.Any()) 
+            if(includeChildren && usersList.Any()) 
             {
-                for(int i = 0; i < usersList.Count(); i++)
-                {
-                    usersList[i].UserProjects = _context.Projects.Where(_ => _.CreatedBy == usersList[i].Id).ToList();
-                }
+                usersList = usersList.Select( x => { x.UserProjects = _projectsRepository.GetEntitiesForParentId(x.Id, true); return x; }).ToList();
             }
 
-            return _context.Users;
+            return usersList;
         } 
 
-        public User GetById(Guid id, bool includeUserProjects = false)
+        public User GetById(Guid id, bool includeChildren = false)
         {
             User user = _context.Users.SingleOrDefault(_ => _.Id == id);
 
-            if(includeUserProjects && user != null)
+            if(includeChildren && user != null)
             {
-                user.UserProjects = _context.Projects.Where(_ => _.CreatedBy == id).ToList();
+                user.UserProjects = _projectsRepository.GetEntitiesForParentId(user.Id, true);
             }
             
             return user;
