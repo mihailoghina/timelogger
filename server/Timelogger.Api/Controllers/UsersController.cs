@@ -15,15 +15,15 @@ namespace Timelogger.Api.Controllers
 			_repo = repo;
 		} 
 
-        [HttpGet("{includeUserProjects:bool=false}", Name = nameof(GetAllUsers))]
-        public IActionResult GetAllUsers(bool includeUserProjects) 
+        [HttpGet(Name = nameof(GetAllUsers))]
+        public IActionResult GetAllUsers([FromQuery] bool includeUserProjects) 
 		{
 			return Ok(_repo.GetAll(includeUserProjects));
 		} 
 
         [HttpGet]
-		[Route("{id:Guid}/{includeUserProjects:bool=false}", Name = nameof(GetUser))]
-		public IActionResult GetUser(Guid id, bool includeUserProjects)
+		[Route("{id:Guid}", Name = nameof(GetUser))]
+		public IActionResult GetUser(Guid id, [FromQuery] bool includeUserProjects)
 		{
 			var user = _repo.GetById(id, includeUserProjects);
 
@@ -72,7 +72,7 @@ namespace Timelogger.Api.Controllers
 				};					
 			}
 
-			return CreatedAtAction(nameof(createdUser), new { id = createdUser.Id }, createdUser);			
+			return CreatedAtAction(nameof(CreateUser), new { id = createdUser.Id }, createdUser);			
 		}
 	}
 }

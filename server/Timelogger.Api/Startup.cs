@@ -42,6 +42,7 @@ namespace Timelogger.Api
 			services.AddMvc();
 
 			services.AddScoped<IProjectsRepository, ProjectsRepository>();
+			services.AddScoped<IUsersRepository, UsersRepository>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,24 +63,11 @@ namespace Timelogger.Api
 			app.UseMvc();
 
 			// Seed "database" with example data
+
 			var context = app.ApplicationServices.GetService<ApiContext>();
-			AddExampleData(context);
-		}
 
-		private static void AddExampleData(ApiContext context)
-		{
-			var testProject1 = new Project
-			{
-				Id = Guid.Parse("b8b939ba-b8b0-43e6-a80f-43cb47d3ab54"),
-				Name = "e-conomic Interview",
-				CreationDate = DateTime.Now,
-				DeadLineDate = DateTime.Now,
-				CreatedBy = Guid.Parse("b808360d-6e6d-4162-b253-d81518d5daf8")
-			};
-
-			context.Projects.Add(testProject1);
-
-			context.SaveChanges();
+			SeedDatabase.SeedUsers(context);
+			SeedDatabase.SeedProjects(context);
 		}
 	}
 }
