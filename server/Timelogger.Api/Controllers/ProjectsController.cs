@@ -116,7 +116,11 @@ namespace Timelogger.Api.Controllers
 
 			if(!ModelState.IsValid)
 			{
-				return BadRequest("invalid model state");
+				var errors = ModelState.Select(x => x.Value.Errors)
+                           .Where(y=>y.Count>0)
+                           .ToList();
+
+				return BadRequest(errors);
 			}
 
 			//prevent closed projects to be opened again because all activity records will look for this flag
