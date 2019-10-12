@@ -43,6 +43,7 @@ namespace Timelogger.Api
 
 			services.AddScoped<IProjectsRepository, ProjectsRepository>();
 			services.AddScoped<IUsersRepository, UsersRepository>();
+			services.AddScoped<IActivityRepository, ActivityRepository>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,39 +6,39 @@ using Microsoft.Extensions.Logging;
 
 namespace Timelogger.Api.Repository
 {
-    public class ProjectsRepository : IProjectsRepository
+    public class ActivityRepository : IActivityRepository
     {
         private readonly ApiContext _context;
         private readonly ILogger _logger;
 
-        public ProjectsRepository(ApiContext context, ILogger<ProjectsRepository> logger) 
+        public ActivityRepository(ApiContext context, ILogger<ActivityRepository> logger) 
         {
             _context = context;
             _logger = logger;
         } 
 
-        public IEnumerable<Project> GetAll() 
+        public IEnumerable<Activity> GetAll() 
         {
-            return _context.Projects.OrderBy(x => x.DeadLineDate);
+            return _context.Activities;
         } 
-        public Project GetById(Guid id)
+        public Activity GetById(Guid id)
         {
-            return _context.Projects.SingleOrDefault(_ => _.Id == id);
+            return _context.Activities.SingleOrDefault(_ => _.Id == id);
         } 
 
-        public Project Add(Project project) 
+        public Activity Add(Activity activity) 
         {
-            _context.Projects.Add(project);
+            _context.Activities.Add(activity);
             if (PersistDbChanges())
             {
-                 return project;
+                 return activity;
             }
-            return (Project)null;          
+            return (Activity)null;          
         }
 
-        public bool Delete(Project project) 
+        public bool Delete(Activity activity) 
         {
-            _context.Projects.Remove(project);
+            _context.Activities.Remove(activity);
             return PersistDbChanges();
         }
 
@@ -55,9 +55,9 @@ namespace Timelogger.Api.Repository
             }        
         }
 
-        public bool Update(Project project)
+        public bool Update(Activity activity)
         {
-            _context.Projects.Update(project);
+            _context.Activities.Update(activity);
             return PersistDbChanges();
         }
     }
