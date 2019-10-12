@@ -19,6 +19,18 @@ namespace Timelogger.Api.Repository
             _recordRepository = recordRepository;
         } 
 
+        public Activity GetById(Guid id, bool includeChildren = false)
+        {
+            Activity activity = _context.Activities.SingleOrDefault(_ => _.Id == id);
+
+            if(includeChildren && activity != null)
+            {
+                activity.ActivityRecords = _recordRepository.GetEntitiesForParentId(id);
+            }
+
+            return activity;
+        } 
+
         public IEnumerable<Activity> GetEntitiesForParentId(Guid projectId, bool includeChildren = false)
         {
             List<Activity> activities = _context.Activities.Where(_ => _.ProjectId == projectId).ToList();
@@ -42,18 +54,7 @@ namespace Timelogger.Api.Repository
 
             return activities;
         } 
-        public Activity GetById(Guid id, bool includeChildren = false)
-        {
-            Activity activity = _context.Activities.SingleOrDefault(_ => _.Id == id);
-
-            if(includeChildren && activity != null)
-            {
-                activity.ActivityRecords = _recordRepository.GetEntitiesForParentId(id);
-            }
-
-            return activity;
-        } 
-
+        
         public Activity Add(Activity activity) 
         {
             _context.Activities.Add(activity);
@@ -62,6 +63,12 @@ namespace Timelogger.Api.Repository
                  return activity;
             }
             return (Activity)null;          
+        }
+
+        public bool Update(Activity activity)
+        {
+            _context.Activities.Update(activity);
+            return PersistDbChanges();
         }
 
         public bool Delete(Activity activity) 
@@ -82,13 +89,6 @@ namespace Timelogger.Api.Repository
                 return false;
             }        
         }
-
-        public bool Update(Activity activity)
-        {
-            _context.Activities.Update(activity);
-            return PersistDbChanges();
-        }
-
-        
+      
     }
 }

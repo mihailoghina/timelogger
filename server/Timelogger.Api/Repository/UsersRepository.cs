@@ -19,18 +19,6 @@ namespace Timelogger.Api.Repository
             _projectsRepository = projectsRepository;
         } 
 
-        public IEnumerable<User> GetAll(bool includeChildren = false) 
-        {
-            List<User> usersList = _context.Users.ToList();
-            
-            if(includeChildren && usersList.Any()) 
-            {
-                usersList = usersList.Select( x => { x.UserProjects = _projectsRepository.GetEntitiesForParentId(x.Id, true); return x; }).ToList();
-            }
-
-            return usersList;
-        } 
-
         public User GetById(Guid id, bool includeChildren = false)
         {
             User user = _context.Users.SingleOrDefault(_ => _.Id == id);
@@ -41,6 +29,18 @@ namespace Timelogger.Api.Repository
             }
             
             return user;
+        } 
+
+        public IEnumerable<User> GetAll(bool includeChildren = false) 
+        {
+            List<User> usersList = _context.Users.ToList();
+            
+            if(includeChildren && usersList.Any()) 
+            {
+                usersList = usersList.Select( x => { x.UserProjects = _projectsRepository.GetEntitiesForParentId(x.Id, true); return x; }).ToList();
+            }
+
+            return usersList;
         } 
 
         public User Add(User user) 
@@ -65,5 +65,6 @@ namespace Timelogger.Api.Repository
                 return false;
             }        
         }
+        
     }
 }

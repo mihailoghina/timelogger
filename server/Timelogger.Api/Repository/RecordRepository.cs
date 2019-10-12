@@ -17,6 +17,10 @@ namespace Timelogger.Api.Repository
             _logger = logger;
         } 
      
+        public Record GetById(Guid id)
+        {
+            return _context.Records.SingleOrDefault(_ => _.Id == id);
+        } 
         public IEnumerable<Record> GetEntitiesForParentId(Guid activityId)
         {
             return _context.Records.Where(_ => _.ActivityId == activityId);
@@ -26,11 +30,7 @@ namespace Timelogger.Api.Repository
         {
             return _context.Records;
         } 
-        public Record GetById(Guid id)
-        {
-            return _context.Records.SingleOrDefault(_ => _.Id == id);
-        } 
-
+        
         public Record Add(Record record) 
         {
             _context.Records.Add(record);
@@ -39,6 +39,13 @@ namespace Timelogger.Api.Repository
                  return record;
             }
             return (Record)null;          
+        }
+
+        
+        public bool Update(Record record)
+        {
+            _context.Records.Update(record);
+            return PersistDbChanges();
         }
 
         public bool Delete(Record record) 
@@ -59,11 +66,6 @@ namespace Timelogger.Api.Repository
                 return false;
             }        
         }
-
-        public bool Update(Record record)
-        {
-            _context.Records.Update(record);
-            return PersistDbChanges();
-        }
+        
     }
 }

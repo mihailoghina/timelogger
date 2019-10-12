@@ -19,6 +19,18 @@ namespace Timelogger.Api.Repository
             _activityRepository = activityRepository;
         } 
 
+        public Project GetById(Guid id, bool includeChildren = false)
+        {
+            Project project = _context.Projects.SingleOrDefault(_ => _.Id == id);
+
+            if(includeChildren && project != null) 
+            {
+                project.ProjectActivities = _activityRepository.GetEntitiesForParentId(id, true);
+            }
+
+            return project;
+        } 
+
         public IEnumerable<Project> GetEntitiesForParentId(Guid id, bool includeChildren = false)
         {
             List<Project> projects = _context.Projects.Where(_ => _.CreatedBy == id).OrderBy(_ => _.DeadLineDate).ToList();
@@ -40,21 +52,9 @@ namespace Timelogger.Api.Repository
                projects = projects.Select( x => { x.ProjectActivities = _activityRepository.GetEntitiesForParentId(x.Id, true); return x; }).ToList();
             }
             
-            return projects;
-            
+            return projects;            
         } 
-        public Project GetById(Guid id, bool includeChildren = false)
-        {
-            Project project = _context.Projects.SingleOrDefault(_ => _.Id == id);
-
-            if(includeChildren && project != null) 
-            {
-                project.ProjectActivities = _activityRepository.GetEntitiesForParentId(id, true);
-            }
-
-            return project;
-        } 
-
+       
         public Project Add(Project project) 
         {
             _context.Projects.Add(project);
@@ -63,6 +63,12 @@ namespace Timelogger.Api.Repository
                  return project;
             }
             return (Project)null;          
+        }
+
+        public bool Update(Project project)
+        {
+            _context.Projects.Update(project);
+            return PersistDbChanges();
         }
 
         public bool Delete(Project project) 
@@ -83,11 +89,6 @@ namespace Timelogger.Api.Repository
                 return false;
             }        
         }
-
-        public bool Update(Project project)
-        {
-            _context.Projects.Update(project);
-            return PersistDbChanges();
-        }
+     
     }
 }

@@ -6,12 +6,12 @@ namespace Timelogger.Api.Repository
 {
     public interface IRecordRepository
     {
-        IEnumerable<Record> GetAll();
-        IEnumerable<Record> GetEntitiesForParentId(Guid activityId);
         Record GetById(Guid id);
+        IEnumerable<Record> GetEntitiesForParentId(Guid activityId);
+        IEnumerable<Record> GetAll();
         Record Add(Record record);
-        bool Delete(Record record);
         bool Update(Record record);
+        bool Delete(Record record);
         bool PersistDbChanges();
     }
 }
