@@ -15,7 +15,7 @@ namespace Timelogger.Api.Controllers
 			_repo = repo;
 		} 
 
-        [HttpGet]
+        [HttpGet(Name = nameof(GetAllProjects))]
         public IActionResult GetAllProjects() 
 		{
 			return Ok(_repo.GetAll());

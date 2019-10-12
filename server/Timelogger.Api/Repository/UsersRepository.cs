@@ -34,7 +34,7 @@ namespace Timelogger.Api.Repository
 
         public User GetById(Guid id, bool includeUserProjects = false)
         {
-            User user = _context.Users.Where(_ => _.Id == id).FirstOrDefault();
+            User user = _context.Users.SingleOrDefault(_ => _.Id == id);
 
             if(includeUserProjects && user != null)
             {

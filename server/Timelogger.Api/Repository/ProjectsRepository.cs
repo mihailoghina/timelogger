@@ -23,7 +23,7 @@ namespace Timelogger.Api.Repository
         } 
         public Project GetById(Guid id)
         {
-            return _context.Projects.Where(_ => _.Id == id).FirstOrDefault();
+            return _context.Projects.SingleOrDefault(_ => _.Id == id);
         } 
 
         public Project Add(Project project) 
