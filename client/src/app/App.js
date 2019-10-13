@@ -1,7 +1,9 @@
 import React from 'react';
-import Projects from './views/Projects';
 import './style.css';
-
+import Project from './views/Project';
+import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import UserProjects from './views/UserProjects';
+  
 export default function App() {
     return (
         <>
@@ -14,10 +16,23 @@ export default function App() {
             </header>
             
             <main>
-                <div className="container">                      
-                    <Projects />
+                <div className="container">                       
+                    <Router>
+                        <div>
+                            <ul>
+                                <li><Link to="/">User projects page</Link></li>
+                            </ul>
+
+                            <Switch>
+                                <Route exact path="/"><UserProjects /></Route>
+                                <Route exact path="/project/:id" component={Project} />
+                            </Switch>
+                        </div>
+                    </Router>                
                 </div>
             </main>
         </>
     );
 }
+
+  
