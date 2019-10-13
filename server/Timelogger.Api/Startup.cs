@@ -39,7 +39,11 @@ namespace Timelogger.Api
 				services.AddCors();
 			}
 			
-			services.AddMvc();
+			services
+				.AddMvc()
+				.AddJsonOptions(
+            		options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore		
+        		);
 
 			services.AddScoped<IProjectsRepository, ProjectsRepository>();
 			services.AddScoped<IUsersRepository, UsersRepository>();
@@ -70,6 +74,8 @@ namespace Timelogger.Api
 
 			SeedDatabase.SeedUsers(context);
 			SeedDatabase.SeedProjects(context);
+			SeedDatabase.SeedActivities(context);
+			SeedDatabase.SeedRecords(context);
 		}
 	}
 }

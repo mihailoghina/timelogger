@@ -11,7 +11,7 @@ namespace Timelogger.Api.Repository
         IEnumerable<Project> GetAll(bool includeChildren = false);
         Project Add(Project project);
         bool Update(Project project);
-        bool Delete(Project project);      
+        bool Delete(Project project);   
         bool PersistDbChanges();
     }
 }

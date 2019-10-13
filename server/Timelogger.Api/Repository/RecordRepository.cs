@@ -54,6 +54,11 @@ namespace Timelogger.Api.Repository
             return PersistDbChanges();
         }
 
+        public void RemoveEntitiesForParentId(Guid activityId)
+        {
+            _context.Records.RemoveRange(GetEntitiesForParentId(activityId).ToList());
+        }
+
         public bool PersistDbChanges()
         {
             try

@@ -8,7 +8,7 @@ namespace Timelogger.Entities
         [Required]
         public Guid ActivityId { get; set; }
         [Required]
-        [MinLength(30, ErrorMessage="Minimum logged time must exceed 30 minutes")]
+        [Range(30, Int32.MaxValue, ErrorMessage="Minimum logged time must exceed 30 minutes")]
         public int LoggedMinutes { get; set; }
         [Required]
         [MinLength(5, ErrorMessage="Minimum record length should be 5 characters")]

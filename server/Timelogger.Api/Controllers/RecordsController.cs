@@ -159,7 +159,7 @@ namespace Timelogger.Api.Controllers
 
             if(activity.CreatedBy != record.CreatedBy)
             {
-                //
+                return BadRequest("Only the owner of activity can log time");
             }
 
 			record.Name = recordUpdateDTO.Name;

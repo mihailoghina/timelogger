@@ -16,16 +16,16 @@ namespace Timelogger.Api.Controllers
 		} 
 
         [HttpGet(Name = nameof(GetAllProjects))]
-        public IActionResult GetAllProjects() 
+        public IActionResult GetAllProjects([FromQuery] bool includeChildren) 
 		{
-			return Ok(_repo.GetAll());
+			return Ok(_repo.GetAll(includeChildren));
 		} 
 
         [HttpGet]
 		[Route("{id:Guid}", Name = nameof(GetProject))]
-		public IActionResult GetProject(Guid id)
+		public IActionResult GetProject(Guid id, [FromQuery] bool includeChildren)
 		{
-			var project = _repo.GetById(id);
+			var project = _repo.GetById(id, includeChildren);
 
 			if(project == null) 
 			{

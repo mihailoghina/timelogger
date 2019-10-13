@@ -12,6 +12,7 @@ namespace Timelogger.Api.Repository
         Record Add(Record record);
         bool Update(Record record);
         bool Delete(Record record);
+        void RemoveEntitiesForParentId(Guid activityId);
         bool PersistDbChanges();
     }
 }

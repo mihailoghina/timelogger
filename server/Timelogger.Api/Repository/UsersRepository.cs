@@ -25,7 +25,7 @@ namespace Timelogger.Api.Repository
 
             if(includeChildren && user != null)
             {
-                user.UserProjects = _projectsRepository.GetEntitiesForParentId(user.Id, true);
+                user.UserProjects = _projectsRepository.GetEntitiesForParentId(user.Id, true).ToList();
             }
             
             return user;
@@ -37,7 +37,7 @@ namespace Timelogger.Api.Repository
             
             if(includeChildren && usersList.Any()) 
             {
-                usersList = usersList.Select( x => { x.UserProjects = _projectsRepository.GetEntitiesForParentId(x.Id, true); return x; }).ToList();
+                usersList = usersList.Select( x => { x.UserProjects = _projectsRepository.GetEntitiesForParentId(x.Id, true).ToList(); return x; }).ToList();
             }
 
             return usersList;

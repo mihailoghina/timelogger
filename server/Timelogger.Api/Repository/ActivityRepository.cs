@@ -25,7 +25,7 @@ namespace Timelogger.Api.Repository
 
             if(includeChildren && activity != null)
             {
-                activity.ActivityRecords = _recordRepository.GetEntitiesForParentId(id);
+                activity.ActivityRecords = _recordRepository.GetEntitiesForParentId(id).ToList();
             }
 
             return activity;
@@ -37,7 +37,7 @@ namespace Timelogger.Api.Repository
 
             if(includeChildren && activities.Any())
             {
-                activities = activities.Select(x => { x.ActivityRecords = _recordRepository.GetEntitiesForParentId(x.Id); return x; }).ToList();
+                activities = activities.Select(x => { x.ActivityRecords = _recordRepository.GetEntitiesForParentId(x.Id).ToList(); return x; }).ToList();
             }
 
             return activities;
@@ -49,7 +49,7 @@ namespace Timelogger.Api.Repository
 
             if(includeChildren && activities.Any())
             {
-                activities = activities.Select(x => { x.ActivityRecords = _recordRepository.GetEntitiesForParentId(x.Id); return x; }).ToList();
+                activities = activities.Select(x => { x.ActivityRecords = _recordRepository.GetEntitiesForParentId(x.Id).ToList(); return x; }).ToList();
             }
 
             return activities;
@@ -74,7 +74,17 @@ namespace Timelogger.Api.Repository
         public bool Delete(Activity activity) 
         {
             _context.Activities.Remove(activity);
+
+            _recordRepository.RemoveEntitiesForParentId(activity.Id);
+
             return PersistDbChanges();
+        }
+
+        public void RemoveEntitiesForParentId(Guid projectId)
+        {
+            var activities = GetEntitiesForParentId(projectId).ToList();
+
+            activities.ForEach(x => _recordRepository.RemoveEntitiesForParentId(x.Id));
         }
 
         public bool PersistDbChanges()
