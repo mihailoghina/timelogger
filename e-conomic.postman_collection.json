@@ -1,0 +1,396 @@
+{
+	"info": {
+		"_postman_id": "a284f50b-7866-4cd0-bafb-d68ad5b73e1f",
+		"name": "e-conomic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3001/api/users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3001/api/users?includeUserProjects=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "includeUserProjects",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/api/users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3001/api/users?includeChildren=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "includeChildren",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/api/users/aaad9946-4201-41c7-825e-1d7c706c83f5?includeUserProjects=true",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/users/aaad9946-4201-41c7-825e-1d7c706c83f5?includeChildren=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users",
+						"aaad9946-4201-41c7-825e-1d7c706c83f5"
+					],
+					"query": [
+						{
+							"key": "includeChildren",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/api/users/aaad9946-4201-41c7-825e-1d7c706c83f5?includeUserProjects=true",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/users/aaad9946-4201-41c7-825e-1d7c706c83f5?",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"users",
+						"aaad9946-4201-41c7-825e-1d7c706c83f5"
+					],
+					"query": [
+						{
+							"key": "includeUserProjects",
+							"value": "true",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/api/projects",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3001/api/projects",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"projects"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/api/projects",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"add new project\",\n\t\"createdBy\": \"aaad9946-4201-41c7-825e-1d7c706c83f5\",\n\t\"deadLineDate\": \"2019-10-21T00:00:00\"\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/projects",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"projects"
+					]
+				},
+				"description": "Create new project"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/api/projects/849d1fe0-5750-485b-9485-67da7d3f4812",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Rebuild bike\",\r\n    \"isComplete\": \"true\",\r\n    \"deadLineDate\": \"2019-10-21T00:00:00\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/projects/849d1fe0-5750-485b-9485-67da7d3f4812",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"projects",
+						"849d1fe0-5750-485b-9485-67da7d3f4812"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/api/projects/eb741d7a-4744-49f6-8cb4-0319e8a20f3a",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"try to change this\",\r\n    \"isComplete\": false,\r\n    \"deadLineDate\": \"2019-10-21T00:00:00\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/projects/849d1fe0-5750-485b-9485-67da7d3f4812",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"projects",
+						"849d1fe0-5750-485b-9485-67da7d3f4812"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/api/activities/7fb2d28b-a268-4929-b24b-d82b607301d0",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3001/api/projects/3959393d-7865-43d4-ad9a-18d205cd119f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"projects",
+						"3959393d-7865-43d4-ad9a-18d205cd119f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/api/records",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"activityId\": \"7fb2d28b-a268-4929-b24b-d82b607301d0\",\n\t\"loggedMinutes\": \"30\",\n\t\"name\": \"Coding1\",\n\t\"description\": \"description1\",\n\t\"createdBy\": \"aaad9946-4201-41c7-825e-1d7c706c83f5\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/records",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"records"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/api/activities",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3001/api/activities?includeChildren=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"activities"
+					],
+					"query": [
+						{
+							"key": "includeChildren",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/api/records",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3001/api/records",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"records"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/api/projects/b8b939ba-b8b0-43e6-a80f-43cb47d3ab54",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3001/api/projects/b8b939ba-b8b0-43e6-a80f-43cb47d3ab54",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"projects",
+						"b8b939ba-b8b0-43e6-a80f-43cb47d3ab54"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
