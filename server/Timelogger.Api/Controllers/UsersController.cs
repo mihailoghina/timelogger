@@ -9,23 +9,25 @@ namespace Timelogger.Api.Controllers
 	[Route("api/[controller]")]
 	public class UsersController : Controller
 	{
-		private readonly IUsersRepository _repo;
-        public UsersController(IUsersRepository repo) 
+		private readonly IUsersRepository _usersRepo;
+		private readonly IProjectsRepository _projectsRepo;
+        public UsersController(IUsersRepository usersRepo, IProjectsRepository projectRepo) 
 		{
-			_repo = repo;
+			_usersRepo = usersRepo;
+			_projectsRepo = projectRepo;
 		} 
 
         [HttpGet(Name = nameof(GetAllUsers))]
         public IActionResult GetAllUsers([FromQuery] bool includeChildren) 
 		{
-			return Ok(_repo.GetAll(includeChildren));
+			return Ok(_usersRepo.GetAll(includeChildren));
 		} 
 
         [HttpGet]
 		[Route("{id:Guid}", Name = nameof(GetUser))]
 		public IActionResult GetUser(Guid id, [FromQuery] bool includeChildren)
 		{
-			var user = _repo.GetById(id, includeChildren);
+			var user = _usersRepo.GetById(id, includeChildren);
 
 			if(user == null) 
 			{
@@ -33,6 +35,13 @@ namespace Timelogger.Api.Controllers
 			}
 						
 			return Ok(user);
+		}
+
+		[HttpGet]
+		[Route("{id:Guid}/projects", Name = nameof(GetUserProjects))]
+		public IActionResult GetUserProjects(Guid id, [FromQuery] bool includeChildren)
+		{
+			return Ok(_projectsRepo.GetEntitiesForParentId(id, includeChildren));
 		}
 
 		[HttpPost(Name = nameof(CreateUser))]
@@ -61,7 +70,7 @@ namespace Timelogger.Api.Controllers
 				CreationDate = DateTime.Now
 			};		
 
-			var createdUser = _repo.Add(user);
+			var createdUser = _usersRepo.Add(user);
 
 			if(createdUser == null)
 			{
