@@ -20,14 +20,14 @@ namespace Timelogger.Api.Controllers
         [HttpGet(Name = nameof(GetAllAcvtivities))]
         public IActionResult GetAllAcvtivities([FromQuery] bool includeChildren) 
 		{
-			return Ok(_activityRepositor.GetAll(includeChildren));
+			return Ok(_activityRepositor.GetAll());
 		} 
 
         [HttpGet]
 		[Route("{id:Guid}", Name = nameof(GetACtivity))]
 		public IActionResult GetACtivity(Guid id, [FromQuery] bool includeChildren)
 		{
-			var activity = _activityRepositor.GetById(id, includeChildren);
+			var activity = _activityRepositor.GetById(id);
 
 			if(activity == null) 
 			{

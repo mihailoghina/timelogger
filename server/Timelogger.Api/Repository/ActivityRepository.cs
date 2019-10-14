@@ -10,47 +10,29 @@ namespace Timelogger.Api.Repository
     {
         private readonly ApiContext _context;
         private readonly ILogger _logger;
-        private readonly IRecordRepository _recordRepository;
-
-        public ActivityRepository(ApiContext context, ILogger<ActivityRepository> logger, IRecordRepository recordRepository) 
+        public ActivityRepository(ApiContext context, ILogger<ActivityRepository> logger) 
         {
             _context = context;
             _logger = logger;
-            _recordRepository = recordRepository;
         } 
 
-        public Activity GetById(Guid id, bool includeChildren = false)
+        public Activity GetById(Guid id)
         {
             Activity activity = _context.Activities.SingleOrDefault(_ => _.Id == id);
-
-            if(includeChildren && activity != null)
-            {
-                activity.ActivityRecords = _recordRepository.GetEntitiesForParentId(id).ToList();
-            }
 
             return activity;
         } 
 
-        public IEnumerable<Activity> GetEntitiesForParentId(Guid projectId, bool includeChildren = false)
+        public IEnumerable<Activity> GetEntitiesForParentId(Guid projectId)
         {
             List<Activity> activities = _context.Activities.Where(_ => _.ProjectId == projectId).ToList();
-
-            if(includeChildren && activities.Any())
-            {
-                activities = activities.Select(x => { x.ActivityRecords = _recordRepository.GetEntitiesForParentId(x.Id).ToList(); return x; }).ToList();
-            }
 
             return activities;
         }
 
-        public IEnumerable<Activity> GetAll(bool includeChildren = false) 
+        public IEnumerable<Activity> GetAll() 
         {
             List<Activity> activities = _context.Activities.ToList();
-
-            if(includeChildren && activities.Any())
-            {
-                activities = activities.Select(x => { x.ActivityRecords = _recordRepository.GetEntitiesForParentId(x.Id).ToList(); return x; }).ToList();
-            }
 
             return activities;
         } 
@@ -75,16 +57,12 @@ namespace Timelogger.Api.Repository
         {
             _context.Activities.Remove(activity);
 
-            _recordRepository.RemoveEntitiesForParentId(activity.Id);
-
             return PersistDbChanges();
         }
 
         public void RemoveEntitiesForParentId(Guid projectId)
         {
             var activities = GetEntitiesForParentId(projectId).ToList();
-
-            activities.ForEach(x => _recordRepository.RemoveEntitiesForParentId(x.Id));
         }
 
         public bool PersistDbChanges()

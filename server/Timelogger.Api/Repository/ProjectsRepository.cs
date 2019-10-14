@@ -25,7 +25,7 @@ namespace Timelogger.Api.Repository
 
             if(includeChildren && project != null) 
             {
-                project.ProjectActivities = _activityRepository.GetEntitiesForParentId(id, true).ToList();
+                project.ProjectActivities = _activityRepository.GetEntitiesForParentId(id).ToList();
             }
 
             return project;
@@ -37,7 +37,7 @@ namespace Timelogger.Api.Repository
 
             if(includeChildren && projects.Any())
             {
-               projects = projects.Select( x => { x.ProjectActivities = _activityRepository.GetEntitiesForParentId(x.Id, true).ToList(); return x; }).ToList();
+               projects = projects.Select( x => { x.ProjectActivities = _activityRepository.GetEntitiesForParentId(x.Id).ToList(); return x; }).ToList();
             }
             
             return projects;
@@ -49,7 +49,7 @@ namespace Timelogger.Api.Repository
 
             if(includeChildren && projects.Any())
             {
-               projects = projects.Select( x => { x.ProjectActivities = _activityRepository.GetEntitiesForParentId(x.Id, true).ToList(); return x; }).ToList();
+               projects = projects.Select( x => { x.ProjectActivities = _activityRepository.GetEntitiesForParentId(x.Id).ToList(); return x; }).ToList();
             }
             
             return projects;            

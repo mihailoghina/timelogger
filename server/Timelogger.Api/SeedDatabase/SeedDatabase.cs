@@ -92,6 +92,7 @@ namespace Timelogger.Api
                 {
                     Id = Guid.Parse("7fb2d28b-a268-4929-b24b-d82b607301d0"),
                     ProjectId = Guid.Parse("b8b939ba-b8b0-43e6-a80f-43cb47d3ab54"),
+                    LoggedMinutes = 45,
                     Name = "Planning",
                     Description = "some bla bla",
                     CreatedBy = Guid.Parse("aaad9946-4201-41c7-825e-1d7c706c83f5"),
@@ -101,6 +102,7 @@ namespace Timelogger.Api
                 {
                     Id = Guid.Parse("17192066-e198-467f-8dd2-07cac6bdb5a4"),
                     ProjectId = Guid.Parse("b8b939ba-b8b0-43e6-a80f-43cb47d3ab54"),
+                    LoggedMinutes = 180,
                     Name = "Design",
                     Description = "Focus on look and feel",
                     CreatedBy = Guid.Parse("aaad9946-4201-41c7-825e-1d7c706c83f5"),
@@ -110,6 +112,7 @@ namespace Timelogger.Api
                 {
                     Id = Guid.Parse("252ce65b-6d2a-4bf0-a14f-3e2729b06214"),
                     ProjectId = Guid.Parse("b8b939ba-b8b0-43e6-a80f-43cb47d3ab54"),
+                    LoggedMinutes = 120,
                     Name = "Coding",
                     Description = "writing code",
                     CreatedBy = Guid.Parse("aaad9946-4201-41c7-825e-1d7c706c83f5"),
@@ -118,110 +121,6 @@ namespace Timelogger.Api
             };
 
             context.Activities.AddRange(activities);
-
-            context.SaveChanges();
-        }
-
-        public static void SeedRecords(ApiContext context)
-        {
-            var records = new List<Record>()
-            {
-                new Record()
-                {                  
-                    Id = Guid.Parse("26507237-4096-4d02-846d-db4dd51299ce"),
-                    ActivityId = Guid.Parse("7fb2d28b-a268-4929-b24b-d82b607301d0"),
-                    LoggedMinutes = 30,
-                    Name = "Coding1",
-                    Description = "description1",
-                    CreatedBy = Guid.Parse("aaad9946-4201-41c7-825e-1d7c706c83f5"),
-                    CreationDate =  new DateTime(2019, 10, 9, 8, 54, 10)            
-                },
-                new Record()
-                {
-                    Id = Guid.Parse("e1e7876f-46f6-4791-8e53-a3b3d597e92f"),
-                    ActivityId = Guid.Parse("7fb2d28b-a268-4929-b24b-d82b607301d0"),
-                    LoggedMinutes = 30,
-                    Name = "Coding2",
-                    Description = "description2",
-                    CreatedBy = Guid.Parse("aaad9946-4201-41c7-825e-1d7c706c83f5"),
-                    CreationDate =  new DateTime(2019, 10, 6, 6, 54, 10)       
-                },
-                new Record()
-                {
-                    Id = Guid.Parse("b601dc39-8021-44e4-8705-8f24ac4b757e"),
-                    ActivityId = Guid.Parse("7fb2d28b-a268-4929-b24b-d82b607301d0"),
-                    LoggedMinutes = 30,
-                    Name = "Coding3",
-                    Description = "description4",
-                    CreatedBy = Guid.Parse("aaad9946-4201-41c7-825e-1d7c706c83f5"),
-                    CreationDate =  new DateTime(2019, 10, 9, 10, 54, 10)       
-                },
-                new Record()
-                {
-                    Id = Guid.Parse("bb9c690d-7cc5-4df8-8d1d-9a589f4ad164"),
-                    ActivityId = Guid.Parse("7fb2d28b-a268-4929-b24b-d82b607301d0"),
-                    LoggedMinutes = 30,
-                    Name = "Coding5",
-                    Description = "description5",
-                    CreatedBy = Guid.Parse("aaad9946-4201-41c7-825e-1d7c706c83f5"),
-                    CreationDate =  new DateTime(2019, 10, 9, 10, 54, 10)       
-                },
-                new Record()
-                {
-                    Id = Guid.Parse("a54e3e39-5077-47ad-b3d9-40989cefbbe9"),
-                    ActivityId = Guid.Parse("7fb2d28b-a268-4929-b24b-d82b607301d0"),
-                    LoggedMinutes = 30,
-                    Name = "Coding6",
-                    CreatedBy = Guid.Parse("aaad9946-4201-41c7-825e-1d7c706c83f5"),
-                    CreationDate =  new DateTime(2019, 9, 9, 10, 54, 10)       
-                },
-                new Record()
-                {
-                    Id = Guid.Parse("8f589c07-a225-4643-b24d-f184b476dfe1"),
-                    ActivityId = Guid.Parse("7fb2d28b-a268-4929-b24b-d82b607301d0"),
-                    LoggedMinutes = 30,
-                    Name = "Coding6",
-                    CreatedBy = Guid.Parse("aaad9946-4201-41c7-825e-1d7c706c83f5"),
-                    CreationDate =  new DateTime(2019, 9, 9, 10, 54, 10)       
-                },
-                new Record()
-                {
-                    Id = Guid.Parse("20a800e1-5be6-47f5-b82c-9e07025cb1aa"),
-                    ActivityId = Guid.Parse("17192066-e198-467f-8dd2-07cac6bdb5a4"),
-                    LoggedMinutes = 171,
-                    Name = "Design1",
-                    CreatedBy = Guid.Parse("aaad9946-4201-41c7-825e-1d7c706c83f5"),
-                    CreationDate =  new DateTime(2019, 9, 8, 12, 54, 10)       
-                },
-                new Record()
-                {
-                    Id = Guid.Parse("a549abb9-0657-44fb-836f-7bdfcef08954"),
-                    ActivityId = Guid.Parse("17192066-e198-467f-8dd2-07cac6bdb5a4"),
-                    LoggedMinutes = 324,
-                    Name = "Design2",
-                    CreatedBy = Guid.Parse("aaad9946-4201-41c7-825e-1d7c706c83f5"),
-                    CreationDate =  new DateTime(2019, 9, 8, 6, 54, 10)       
-                },
-                new Record()
-                {
-                    Id = Guid.Parse("7c3a8f11-f5a3-4a17-8faa-e2742488024a"),
-                    ActivityId = Guid.Parse("252ce65b-6d2a-4bf0-a14f-3e2729b06214"),
-                    LoggedMinutes = 240,
-                    Name = "Coding1",
-                    CreatedBy = Guid.Parse("aaad9946-4201-41c7-825e-1d7c706c83f5"),
-                    CreationDate =  new DateTime(2019, 9, 14, 12, 54, 10)       
-                },
-                new Record()
-                {
-                    Id = Guid.Parse("39b4e3b0-32f1-499f-8371-a739ed69cb1d"),
-                    ActivityId = Guid.Parse("252ce65b-6d2a-4bf0-a14f-3e2729b06214"),
-                    LoggedMinutes = 360,
-                    Name = "Coding1",
-                    CreatedBy = Guid.Parse("aaad9946-4201-41c7-825e-1d7c706c83f5"),
-                    CreationDate =  new DateTime(2019, 9, 13, 6, 54, 10)       
-                },
-            };
-            context.Records.AddRange(records);
 
             context.SaveChanges();
         }
