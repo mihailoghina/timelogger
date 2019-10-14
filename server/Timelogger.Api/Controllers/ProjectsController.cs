@@ -16,10 +16,16 @@ namespace Timelogger.Api.Controllers
 		} 
 
         [HttpGet(Name = nameof(GetAllProjects))]
-        public IActionResult GetAllProjects([FromQuery] bool includeChildren) 
+        public IActionResult GetAllProjects([FromQuery] bool includeTime = false) 
 		{
-			//TODO: get activities
-			return Ok(_repositoryWrapper.ProjectRepository.GetAll());
+			var projects = _repositoryWrapper.ProjectRepository.GetAll();
+
+			if(includeTime)
+			{
+				projects = projects.Select( _ => { _.LoggedMinutes = _repositoryWrapper.ActivityRepository.GetLoggedTimeOnProject(_.Id); return _; });
+			}
+
+			return Ok(projects);
 		} 
 
         [HttpGet]
@@ -39,6 +45,13 @@ namespace Timelogger.Api.Controllers
 			}
 						
 			return Ok(project);
+		}
+
+		[HttpGet]
+		[Route("{id:Guid}/activities", Name = nameof(GetProjectActivities))]
+		public IActionResult GetProjectActivities(Guid id)
+		{
+			return Ok(_repositoryWrapper.ActivityRepository.GetEntitiesForParentId(id));
 		}
 
 		[HttpPost(Name = nameof(CreateProject))]
