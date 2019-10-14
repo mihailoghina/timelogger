@@ -9,25 +9,23 @@ namespace Timelogger.Api.Controllers
 	[Route("api/[controller]")]
 	public class UsersController : Controller
 	{
-		private readonly IUsersRepository _usersRepo;
-		private readonly IProjectsRepository _projectsRepo;
-        public UsersController(IUsersRepository usersRepo, IProjectsRepository projectRepo) 
+		private readonly IRepositoryWrapper _repositoryWrapper;
+        public UsersController(IRepositoryWrapper repositoryWrapper) 
 		{
-			_usersRepo = usersRepo;
-			_projectsRepo = projectRepo;
+			_repositoryWrapper = repositoryWrapper;
 		} 
 
         [HttpGet(Name = nameof(GetAllUsers))]
         public IActionResult GetAllUsers([FromQuery] bool includeChildren) 
 		{
-			return Ok(_usersRepo.GetAll(includeChildren));
+			return Ok(_repositoryWrapper.UserRepository.GetAll(includeChildren));
 		} 
 
         [HttpGet]
 		[Route("{id:Guid}", Name = nameof(GetUser))]
 		public IActionResult GetUser(Guid id, [FromQuery] bool includeChildren)
 		{
-			var user = _usersRepo.GetById(id, includeChildren);
+			var user = _repositoryWrapper.UserRepository.GetById(id, includeChildren);
 
 			if(user == null) 
 			{
@@ -41,7 +39,7 @@ namespace Timelogger.Api.Controllers
 		[Route("{id:Guid}/projects", Name = nameof(GetUserProjects))]
 		public IActionResult GetUserProjects(Guid id, [FromQuery] bool includeChildren)
 		{
-			return Ok(_projectsRepo.GetEntitiesForParentId(id, includeChildren));
+			return Ok(_repositoryWrapper.ProjectRepository.GetEntitiesForParentId(id, includeChildren));
 		}
 
 		[HttpPost(Name = nameof(CreateUser))]
@@ -70,7 +68,7 @@ namespace Timelogger.Api.Controllers
 				CreationDate = DateTime.Now
 			};		
 
-			var createdUser = _usersRepo.Add(user);
+			var createdUser = _repositoryWrapper.UserRepository.Add(user);
 
 			if(createdUser == null)
 			{

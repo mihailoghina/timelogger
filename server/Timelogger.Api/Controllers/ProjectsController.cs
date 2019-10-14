@@ -9,23 +9,23 @@ namespace Timelogger.Api.Controllers
 	[Route("api/[controller]")]
 	public class ProjectsController : Controller
 	{
-		private readonly IProjectsRepository _repo;
-        public ProjectsController(IProjectsRepository repo) 
+		private readonly IRepositoryWrapper _repositoryWrapper;
+        public ProjectsController(IRepositoryWrapper repositoryWrapper) 
 		{
-			_repo = repo;
+			_repositoryWrapper = repositoryWrapper;
 		} 
 
         [HttpGet(Name = nameof(GetAllProjects))]
         public IActionResult GetAllProjects([FromQuery] bool includeChildren) 
 		{
-			return Ok(_repo.GetAll(includeChildren));
+			return Ok(_repositoryWrapper.ProjectRepository.GetAll(includeChildren));
 		} 
 
         [HttpGet]
 		[Route("{id:Guid}", Name = nameof(GetProject))]
 		public IActionResult GetProject(Guid id, [FromQuery] bool includeChildren)
 		{
-			var project = _repo.GetById(id, includeChildren);
+			var project = _repositoryWrapper.ProjectRepository.GetById(id, includeChildren);
 
 			if(project == null) 
 			{
@@ -61,7 +61,7 @@ namespace Timelogger.Api.Controllers
 				CreationDate = DateTime.Now
 			};		
 
-			var createdProject = _repo.Add(project);
+			var createdProject = _repositoryWrapper.ProjectRepository.Add(project);
 
 			if(createdProject == null)
 			{
@@ -79,14 +79,14 @@ namespace Timelogger.Api.Controllers
 		[Route("{id:Guid}", Name = nameof(DeleteProject))]
 		public IActionResult DeleteProject(Guid id)
 		{
-			var project = _repo.GetById(id);
+			var project = _repositoryWrapper.ProjectRepository.GetById(id);
 
 			if(project == null) 
 			{
 				return BadRequest("Project has not been found");
 			}
 
-			if(!_repo.Delete(project))
+			if(!_repositoryWrapper.ProjectRepository.Delete(project))
 			{
 				return new ContentResult
 				{
@@ -107,7 +107,7 @@ namespace Timelogger.Api.Controllers
                 return BadRequest();
             }
 
-			var project = _repo.GetById(id);
+			var project = _repositoryWrapper.ProjectRepository.GetById(id);
 
             if (project == null)
             {
@@ -134,7 +134,7 @@ namespace Timelogger.Api.Controllers
 				project.IsComplete = projectUpdateDTO.IsComplete;
 				project.DeadLineDate = projectUpdateDTO.DeadLineDate;
 
-				if(!_repo.Update(project))
+				if(!_repositoryWrapper.ProjectRepository.Update(project))
 				{
 					return new ContentResult
 					{

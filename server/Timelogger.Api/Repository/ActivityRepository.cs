@@ -2,18 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Timelogger.Entities;
-using Microsoft.Extensions.Logging;
 
 namespace Timelogger.Api.Repository
 {
     public class ActivityRepository : IActivityRepository
     {
         private readonly ApiContext _context;
-        private readonly ILogger _logger;
-        public ActivityRepository(ApiContext context, ILogger<ActivityRepository> logger) 
+
+        public ActivityRepository(ApiContext context) 
         {
             _context = context;
-            _logger = logger;
         } 
 
         public Activity GetById(Guid id)
@@ -73,7 +71,7 @@ namespace Timelogger.Api.Repository
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex.StackTrace);
+                // _logger.LogError(ex.StackTrace);
                 return false;
             }        
         }

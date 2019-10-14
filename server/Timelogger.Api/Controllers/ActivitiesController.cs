@@ -9,25 +9,23 @@ namespace Timelogger.Api.Controllers
 	[Route("api/[controller]")]
 	public class ActivitiesController : Controller
 	{
-		private readonly IActivityRepository _activityRepositor;
-		private readonly IProjectsRepository _projectRepository;
-        public ActivitiesController(IActivityRepository activityRepository, IProjectsRepository projectsRepository) 
+		private readonly IRepositoryWrapper _repositoryWrapper;
+        public ActivitiesController(IRepositoryWrapper repositoryWrapper) 
 		{
-			_activityRepositor = activityRepository;
-			_projectRepository = projectsRepository;
+			_repositoryWrapper = repositoryWrapper;
 		} 
 
         [HttpGet(Name = nameof(GetAllAcvtivities))]
         public IActionResult GetAllAcvtivities([FromQuery] bool includeChildren) 
 		{
-			return Ok(_activityRepositor.GetAll());
+			return Ok(_repositoryWrapper.ActivityRepository.GetAll());
 		} 
 
         [HttpGet]
 		[Route("{id:Guid}", Name = nameof(GetACtivity))]
 		public IActionResult GetACtivity(Guid id, [FromQuery] bool includeChildren)
 		{
-			var activity = _activityRepositor.GetById(id);
+			var activity = _repositoryWrapper.ActivityRepository.GetById(id);
 
 			if(activity == null) 
 			{
@@ -54,7 +52,7 @@ namespace Timelogger.Api.Controllers
 				return BadRequest(errors);
 			}
 
-			var project = _projectRepository.GetById(createActivityDTO.ProjectId);
+			var project = _repositoryWrapper.ProjectRepository.GetById(createActivityDTO.ProjectId);
 
 			//prevent adding activities to project which has been completed.
 			//completed projects can be only deleted together with its activities and records
@@ -78,7 +76,7 @@ namespace Timelogger.Api.Controllers
 				CreationDate = DateTime.Now
 			};		
 
-			var createdActivity = _activityRepositor.Add(activity);
+			var createdActivity = _repositoryWrapper.ActivityRepository.Add(activity);
 
 			if(createdActivity == null)
 			{
@@ -96,14 +94,14 @@ namespace Timelogger.Api.Controllers
 		[Route("{id:Guid}", Name = nameof(DeleteACtivity))]
 		public IActionResult DeleteACtivity(Guid id)
 		{
-			var activity = _activityRepositor.GetById(id);
+			var activity = _repositoryWrapper.ActivityRepository.GetById(id);
 
 			if(activity == null) 
 			{
 				return BadRequest("Activity has not been found");
 			}
 
-			if(!_activityRepositor.Delete(activity))
+			if(!_repositoryWrapper.ActivityRepository.Delete(activity))
 			{
 				return new ContentResult
 				{
@@ -124,7 +122,7 @@ namespace Timelogger.Api.Controllers
                 return BadRequest();
             }
 
-			var activity = _activityRepositor.GetById(id);
+			var activity = _repositoryWrapper.ActivityRepository.GetById(id);
 
             if (activity == null)
             {
@@ -140,7 +138,7 @@ namespace Timelogger.Api.Controllers
 				return BadRequest(errors);
 			}
 
-			var project = _projectRepository.GetById(activity.ProjectId);
+			var project = _repositoryWrapper.ProjectRepository.GetById(activity.ProjectId);
 
 			//prevent modifying activities and later time records of a project which has been completed.
 			//completed projects can be only deleted together with its activities and records
@@ -152,7 +150,7 @@ namespace Timelogger.Api.Controllers
 			activity.Name = activityUpdateDTO.Name;
 			activity.Description = activityUpdateDTO.Description;
 
-			if(!_activityRepositor.Update(activity))
+			if(!_repositoryWrapper.ActivityRepository.Update(activity))
 			{
 				return new ContentResult
 				{

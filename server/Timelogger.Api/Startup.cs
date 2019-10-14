@@ -45,9 +45,7 @@ namespace Timelogger.Api
             		options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore		
         		);
 
-			services.AddScoped<IProjectsRepository, ProjectsRepository>();
-			services.AddScoped<IUsersRepository, UsersRepository>();
-			services.AddScoped<IActivityRepository, ActivityRepository>();
+			services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
