@@ -24,14 +24,18 @@ namespace Timelogger.Api.Controllers
 
         [HttpGet]
 		[Route("{id:Guid}", Name = nameof(GetProject))]
-		public IActionResult GetProject(Guid id)
+		public IActionResult GetProject(Guid id, [FromQuery] bool includeTime = false)
 		{
-			//TODO: get activities
 			var project = _repositoryWrapper.ProjectRepository.GetById(id);
 
 			if(project == null) 
 			{
 				return NotFound("Project was not found");
+			}
+
+			if(includeTime) 
+			{
+				project.LoggedMinutes = _repositoryWrapper.ActivityRepository.GetLoggedTimeOnProject(id);
 			}
 						
 			return Ok(project);

@@ -23,17 +23,20 @@ namespace Timelogger.Api.Repository
 
         public IEnumerable<Activity> GetEntitiesForParentId(Guid projectId)
         {
-            List<Activity> activities = _context.Activities.Where(_ => _.ProjectId == projectId).ToList();
-
-            return activities;
+            return _context.Activities.Where(_ => _.ProjectId == projectId);
         }
 
         public IEnumerable<Activity> GetAll() 
         {
-            List<Activity> activities = _context.Activities.ToList();
-
-            return activities;
+            return _context.Activities;
         } 
+
+        public int GetLoggedTimeOnProject(Guid projectId)
+        {
+            var activities = GetEntitiesForParentId(projectId);
+
+            return activities.Sum(_ => _.LoggedMinutes);
+        }
         
         public Activity Add(Activity activity) 
         {
@@ -54,7 +57,7 @@ namespace Timelogger.Api.Repository
 
         public void RemoveEntitiesForParentId(Guid projectId)
         {
-            var activities = GetEntitiesForParentId(projectId).ToList();
+            _context.Activities.RemoveRange(GetEntitiesForParentId(projectId));
         }
       
     }

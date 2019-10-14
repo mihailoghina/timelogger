@@ -9,6 +9,7 @@ namespace Timelogger.Api.Repository
         Activity GetById(Guid id);
         IEnumerable<Activity> GetEntitiesForParentId(Guid projectId);
         IEnumerable<Activity> GetAll();
+        int GetLoggedTimeOnProject(Guid projectId);
         Activity Add(Activity activity);
         void Update(Activity activity);
         void Delete(Activity activity);    
