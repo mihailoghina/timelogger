@@ -5,5 +5,6 @@ namespace Timelogger.Api.Repository
         IUsersRepository UserRepository { get; }
         IProjectsRepository ProjectRepository { get; }
         IActivityRepository ActivityRepository { get; }
+        bool PersistDbChanges();
     }
 }

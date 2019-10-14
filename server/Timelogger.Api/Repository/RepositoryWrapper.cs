@@ -12,10 +12,12 @@ namespace Timelogger.Api.Repository
         private IUsersRepository _userRepository;
         private IProjectsRepository _projectRepository;
         private IActivityRepository _activityRepository;
+        private ILogger _logger;
 
-        public RepositoryWrapper(ApiContext apiContext)
+        public RepositoryWrapper(ApiContext apiContext, ILogger logger)
         {
             _apiContext = apiContext;
+            _logger = logger;
         }
  
         public IUsersRepository UserRepository => _userRepository ?? new UsersRepository(_apiContext);
@@ -23,6 +25,19 @@ namespace Timelogger.Api.Repository
         public IProjectsRepository ProjectRepository => _projectRepository ?? new ProjectsRepository(_apiContext);
 
         public IActivityRepository ActivityRepository => _activityRepository ?? new ActivityRepository(_apiContext);
+
+        public bool PersistDbChanges()
+        {
+            try
+            {
+                return _apiContext.SaveChanges() > 0;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.StackTrace);
+                return false;
+            }        
+        }
     
     }
 }

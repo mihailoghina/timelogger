@@ -78,7 +78,7 @@ namespace Timelogger.Api.Controllers
 
 			var createdActivity = _repositoryWrapper.ActivityRepository.Add(activity);
 
-			if(createdActivity == null)
+			if (!_repositoryWrapper.PersistDbChanges())
 			{
 				return new ContentResult
 				{
@@ -101,7 +101,9 @@ namespace Timelogger.Api.Controllers
 				return BadRequest("Activity has not been found");
 			}
 
-			if(!_repositoryWrapper.ActivityRepository.Delete(activity))
+			_repositoryWrapper.ActivityRepository.Delete(activity);
+
+			if(!_repositoryWrapper.PersistDbChanges())
 			{
 				return new ContentResult
 				{
@@ -150,7 +152,9 @@ namespace Timelogger.Api.Controllers
 			activity.Name = activityUpdateDTO.Name;
 			activity.Description = activityUpdateDTO.Description;
 
-			if(!_repositoryWrapper.ActivityRepository.Update(activity))
+			_repositoryWrapper.ActivityRepository.Update(activity);
+
+			if(!_repositoryWrapper.PersistDbChanges())
 			{
 				return new ContentResult
 				{
