@@ -6,8 +6,8 @@ namespace Timelogger.Api.Repository
 {
     public interface IUsersRepository
     {
-        User GetById(Guid id, bool includeChildren = false);
-        IEnumerable<User> GetAll(bool includeChildren = false);    
+        User GetById(Guid id);
+        IEnumerable<User> GetAll();    
         User Add(User user);
     }
 }

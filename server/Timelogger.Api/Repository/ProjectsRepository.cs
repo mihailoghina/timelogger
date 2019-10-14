@@ -14,25 +14,19 @@ namespace Timelogger.Api.Repository
             _context = context;
         } 
 
-        public Project GetById(Guid id, bool includeChildren = false)
+        public Project GetById(Guid id)
         {
-            Project project = _context.Projects.SingleOrDefault(_ => _.Id == id);
-
-            return project;
+            return _context.Projects.SingleOrDefault(_ => _.Id == id);
         } 
 
-        public IEnumerable<Project> GetEntitiesForParentId(Guid id, bool includeChildren = false)
+        public IEnumerable<Project> GetEntitiesForParentId(Guid id)
         {
-            List<Project> projects = _context.Projects.Where(_ => _.CreatedBy == id).OrderBy(_ => _.DeadLineDate).ToList();
-
-            return projects;
+            return _context.Projects.Where(_ => _.CreatedBy == id).OrderBy(_ => _.DeadLineDate);
         }
 
-        public IEnumerable<Project> GetAll(bool includeChildren = false) 
+        public IEnumerable<Project> GetAll() 
         {           
-            List<Project> projects = _context.Projects.OrderBy(_ => _.DeadLineDate).ToList();
-            
-            return projects;            
+            return _context.Projects.OrderBy(_ => _.DeadLineDate);        
         } 
        
         public Project Add(Project project) 

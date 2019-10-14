@@ -18,14 +18,16 @@ namespace Timelogger.Api.Controllers
         [HttpGet(Name = nameof(GetAllProjects))]
         public IActionResult GetAllProjects([FromQuery] bool includeChildren) 
 		{
-			return Ok(_repositoryWrapper.ProjectRepository.GetAll(includeChildren));
+			//TODO: get activities
+			return Ok(_repositoryWrapper.ProjectRepository.GetAll());
 		} 
 
         [HttpGet]
 		[Route("{id:Guid}", Name = nameof(GetProject))]
-		public IActionResult GetProject(Guid id, [FromQuery] bool includeChildren)
+		public IActionResult GetProject(Guid id)
 		{
-			var project = _repositoryWrapper.ProjectRepository.GetById(id, includeChildren);
+			//TODO: get activities
+			var project = _repositoryWrapper.ProjectRepository.GetById(id);
 
 			if(project == null) 
 			{

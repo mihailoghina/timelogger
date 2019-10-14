@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Timelogger.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace Timelogger.Api.Repository

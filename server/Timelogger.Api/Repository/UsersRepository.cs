@@ -14,18 +14,14 @@ namespace Timelogger.Api.Repository
             _context = context;
         } 
 
-        public User GetById(Guid id, bool includeChildren = false)
+        public User GetById(Guid id)
         {
-            User user = _context.Users.SingleOrDefault(_ => _.Id == id);
-
-            return user;
+            return _context.Users.SingleOrDefault(_ => _.Id == id);
         } 
 
-        public IEnumerable<User> GetAll(bool includeChildren = false) 
+        public IEnumerable<User> GetAll() 
         {
-            List<User> usersList = _context.Users.ToList();
-
-            return usersList;
+            return _context.Users;
         } 
 
         public User Add(User user) 
