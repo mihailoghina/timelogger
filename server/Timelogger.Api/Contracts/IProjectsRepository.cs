@@ -10,8 +10,7 @@ namespace Timelogger.Api.Repository
         IEnumerable<Project> GetEntitiesForParentId(Guid id, bool includeChildren = false);
         IEnumerable<Project> GetAll(bool includeChildren = false);
         Project Add(Project project);
-        bool Update(Project project);
-        bool Delete(Project project);   
-        bool PersistDbChanges();
+        void Update(Project project);
+        void Delete(Project project);   
     }
 }

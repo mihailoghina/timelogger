@@ -38,39 +38,18 @@ namespace Timelogger.Api.Repository
         public Project Add(Project project) 
         {
             _context.Projects.Add(project);
-            if (PersistDbChanges())
-            {
-                 return project;
-            }
-            return (Project)null;          
+
+            return project;        
         }
 
-        public bool Update(Project project)
+        public void Update(Project project)
         {
             _context.Projects.Update(project);
-            return PersistDbChanges();
         }
 
-        public bool Delete(Project project) 
+        public void Delete(Project project) 
         {
             _context.Projects.Remove(project);
-
-            //_activityRepository.RemoveEntitiesForParentId(project.Id);
-
-            return PersistDbChanges();
-        }
-
-        public bool PersistDbChanges()
-        {
-            try
-            {
-                return _context.SaveChanges() > 0;
-            }
-            catch(Exception ex)
-            {
-                //_logger.LogError(ex.StackTrace);
-                return false;
-            }        
         }
      
     }

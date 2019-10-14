@@ -63,7 +63,7 @@ namespace Timelogger.Api.Controllers
 
 			var createdProject = _repositoryWrapper.ProjectRepository.Add(project);
 
-			if(createdProject == null)
+			if(!_repositoryWrapper.PersistDbChanges())
 			{
 				return new ContentResult
 				{
@@ -86,7 +86,9 @@ namespace Timelogger.Api.Controllers
 				return BadRequest("Project has not been found");
 			}
 
-			if(!_repositoryWrapper.ProjectRepository.Delete(project))
+			_repositoryWrapper.ProjectRepository.Delete(project);
+
+			if(!_repositoryWrapper.PersistDbChanges())
 			{
 				return new ContentResult
 				{
@@ -134,7 +136,9 @@ namespace Timelogger.Api.Controllers
 				project.IsComplete = projectUpdateDTO.IsComplete;
 				project.DeadLineDate = projectUpdateDTO.DeadLineDate;
 
-				if(!_repositoryWrapper.ProjectRepository.Update(project))
+				_repositoryWrapper.ProjectRepository.Update(project);
+
+				if(!_repositoryWrapper.PersistDbChanges())
 				{
 					return new ContentResult
 					{
