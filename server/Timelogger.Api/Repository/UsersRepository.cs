@@ -31,24 +31,8 @@ namespace Timelogger.Api.Repository
         public User Add(User user) 
         {
             _context.Users.Add(user);
-            if (PersistDbChanges())
-            {
-                 return user;
-            }
-            return (User)null;          
-        }
 
-        public bool PersistDbChanges()
-        {
-            try
-            {
-                return _context.SaveChanges() > 0;
-            }
-            catch(Exception ex)
-            {
-                //_logger.LogError(ex.StackTrace);
-                return false;
-            }        
+            return user;         
         }
         
     }

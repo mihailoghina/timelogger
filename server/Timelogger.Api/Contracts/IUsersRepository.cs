@@ -9,6 +9,5 @@ namespace Timelogger.Api.Repository
         User GetById(Guid id, bool includeChildren = false);
         IEnumerable<User> GetAll(bool includeChildren = false);    
         User Add(User user);
-        bool PersistDbChanges();
     }
 }

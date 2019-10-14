@@ -70,7 +70,7 @@ namespace Timelogger.Api.Controllers
 
 			var createdUser = _repositoryWrapper.UserRepository.Add(user);
 
-			if(createdUser == null)
+			if(!_repositoryWrapper.PersistDbChanges())
 			{
 				return new ContentResult
 				{
