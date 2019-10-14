@@ -106,6 +106,7 @@ namespace Timelogger.Api.Controllers
 			}
 
 			_repositoryWrapper.ProjectRepository.Delete(project);
+			_repositoryWrapper.ActivityRepository.RemoveEntitiesForParentId(project.Id);
 
 			if(!_repositoryWrapper.PersistDbChanges())
 			{

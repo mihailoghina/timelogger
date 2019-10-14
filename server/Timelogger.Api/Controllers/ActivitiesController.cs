@@ -22,8 +22,8 @@ namespace Timelogger.Api.Controllers
 		} 
 
         [HttpGet]
-		[Route("{id:Guid}", Name = nameof(GetACtivity))]
-		public IActionResult GetACtivity(Guid id)
+		[Route("{id:Guid}", Name = nameof(GetActivity))]
+		public IActionResult GetActivity(Guid id)
 		{
 			var activity = _repositoryWrapper.ActivityRepository.GetById(id);
 
@@ -55,7 +55,7 @@ namespace Timelogger.Api.Controllers
 			var project = _repositoryWrapper.ProjectRepository.GetById(createActivityDTO.ProjectId);
 
 			//prevent adding activities to project which has been completed.
-			//completed projects can be only deleted together with its activities and records
+			//completed projects can be only deleted together with its activities
 			if(project.IsComplete == true)
 			{
 				return BadRequest("Cannot change activity of a closed project");
@@ -142,8 +142,8 @@ namespace Timelogger.Api.Controllers
 
 			var project = _repositoryWrapper.ProjectRepository.GetById(activity.ProjectId);
 
-			//prevent modifying activities and later time records of a project which has been completed.
-			//completed projects can be only deleted together with its activities and records
+			//prevent modifying activities of a project which has been completed.
+			//completed projects can be only deleted together with its activities
 			if(project.IsComplete == true)
 			{
 				return BadRequest("Cannot change activity of a closed project");
