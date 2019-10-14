@@ -23,7 +23,7 @@ namespace Timelogger.Api.Repository
 
         public IEnumerable<Activity> GetEntitiesForParentId(Guid projectId)
         {
-            return _context.Activities.Where(_ => _.ProjectId == projectId);
+            return _context.Activities.Where(_ => _.ProjectId == projectId).OrderByDescending(_ => _.CreationDate);
         }
 
         public IEnumerable<Activity> GetAll() 

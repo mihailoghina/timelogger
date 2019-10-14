@@ -10,6 +10,5 @@ namespace Timelogger.Entities
 		public string Name { get; set; }
 		public string PathToAvatar { get; set;}
 		public DateTime CreationDate { get; set; }
-		public IEnumerable<Project> UserProjects { get; set; }
 	}
 }
