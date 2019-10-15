@@ -20,7 +20,7 @@ namespace Timelogger.Entities
 
         public string GetErrorMessage(string email)
         {
-            return $"Email {email} is already in use";
+            return $"Email: {email} is already in use";
         }
     }
 }

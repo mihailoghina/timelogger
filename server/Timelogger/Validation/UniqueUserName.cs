@@ -20,7 +20,7 @@ namespace Timelogger.Entities
 
         public string GetErrorMessage(string userName)
         {
-            return $"User name {userName} is already in use";
+            return $"User name: {userName} is already in use";
         }
     }
 }

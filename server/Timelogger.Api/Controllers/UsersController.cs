@@ -37,9 +37,16 @@ namespace Timelogger.Api.Controllers
 
 		[HttpGet]
 		[Route("{id:Guid}/projects", Name = nameof(GetUserProjects))]
-		public IActionResult GetUserProjects(Guid id)
+		public IActionResult GetUserProjects(Guid id, [FromQuery] bool includeTime = false)
 		{
-			return Ok(_repositoryWrapper.ProjectRepository.GetEntitiesForParentId(id));
+			var projects = _repositoryWrapper.ProjectRepository.GetEntitiesForParentId(id);
+
+			if(includeTime)
+			{
+				projects = projects.Select( _ => { _.LoggedMinutes = _repositoryWrapper.ActivityRepository.GetLoggedTimeOnProject(_.Id); return _; });
+			}
+
+			return Ok(projects);
 		}
 
 		[HttpPost(Name = nameof(CreateUser))]
@@ -47,16 +54,16 @@ namespace Timelogger.Api.Controllers
 		{
 			if(createUserDTO == null) 
 			{
-				return BadRequest();
+				return BadRequest("invalid payload");
 			}
 
 			if(!ModelState.IsValid)
 			{
-				var errors = ModelState.Select(x => x.Value.Errors)
-                           .Where(y=>y.Count>0)
-                           .ToList();
+				var message = string.Join("\n", ModelState.Values
+									.SelectMany(v => v.Errors)
+									.Select(e => e.ErrorMessage));
 
-				return BadRequest(errors);
+				return BadRequest(message);
 			}
 
 			var user = new User

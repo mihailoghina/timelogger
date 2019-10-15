@@ -40,16 +40,17 @@ namespace Timelogger.Api.Controllers
 		{
 			if(createActivityDTO == null) 
 			{
-				return BadRequest();
+				return BadRequest("invalid payload");
 			}
 
 			if(!ModelState.IsValid)
 			{
-				var errors = ModelState.Select(x => x.Value.Errors)
-                           .Where(y=>y.Count>0)
-                           .ToList();
+				var message = string.Join("\n", ModelState.Values
+									.SelectMany(v => v.Errors)
+									.Select(e => e.ErrorMessage));
 
-				return BadRequest(errors);
+
+				return BadRequest(message);
 			}
 
 			var project = _repositoryWrapper.ProjectRepository.GetById(createActivityDTO.ProjectId);
@@ -101,6 +102,15 @@ namespace Timelogger.Api.Controllers
 				return BadRequest("Activity has not been found");
 			}
 
+			var project = _repositoryWrapper.ProjectRepository.GetById(activity.ProjectId);
+
+			//prevent delete activities of a project which has been completed.
+			//completed projects can be only deleted together with its activities
+			if(project != null && project.IsComplete == true)
+			{
+				return BadRequest("Cannot delete activity of a closed project. Whole project can be closed");
+			}
+
 			_repositoryWrapper.ActivityRepository.Delete(activity);
 
 			if(!_repositoryWrapper.PersistDbChanges())
@@ -121,30 +131,31 @@ namespace Timelogger.Api.Controllers
         {
             if (activityUpdateDTO == null)
             {
-                return BadRequest();
+                return BadRequest("invalid payload");
             }
 
 			var activity = _repositoryWrapper.ActivityRepository.GetById(id);
 
             if (activity == null)
             {
-                return NotFound();
+                return NotFound("activity not found");
             }
 
 			if(!ModelState.IsValid)
 			{
-				var errors = ModelState.Select(x => x.Value.Errors)
-                           .Where(y=>y.Count>0)
-                           .ToList();
+				var message = string.Join("\n", ModelState.Values
+									.SelectMany(v => v.Errors)
+									.Select(e => e.ErrorMessage));
 
-				return BadRequest(errors);
+
+				return BadRequest(message);
 			}
 
 			var project = _repositoryWrapper.ProjectRepository.GetById(activity.ProjectId);
 
 			//prevent modifying activities of a project which has been completed.
 			//completed projects can be only deleted together with its activities
-			if(project.IsComplete == true)
+			if(project != null && project.IsComplete == true)
 			{
 				return BadRequest("Cannot change activity of a closed project");
 			}

@@ -59,16 +59,17 @@ namespace Timelogger.Api.Controllers
 		{
 			if(createProjectDTO == null) 
 			{
-				return BadRequest();
+				return BadRequest("invalid payload");
 			}
 
 			if(!ModelState.IsValid)
 			{
-				var errors = ModelState.Select(x => x.Value.Errors)
-                           .Where(y=>y.Count>0)
-                           .ToList();
+				var message = string.Join("\n", ModelState.Values
+									.SelectMany(v => v.Errors)
+									.Select(e => e.ErrorMessage));
 
-				return BadRequest(errors);
+
+				return BadRequest(message);
 			}
 
 			var project = new Project
@@ -126,27 +127,28 @@ namespace Timelogger.Api.Controllers
         {
             if (projectUpdateDTO == null)
             {
-                return BadRequest();
+                return BadRequest("invalid payload");
             }
 
 			var project = _repositoryWrapper.ProjectRepository.GetById(id);
 
             if (project == null)
             {
-                return NotFound();
+                return NotFound("project was not found");
             }
 
 			if(!ModelState.IsValid)
 			{
-				var errors = ModelState.Select(x => x.Value.Errors)
-                           .Where(y=>y.Count>0)
-                           .ToList();
+				var message = string.Join("\n", ModelState.Values
+									.SelectMany(v => v.Errors)
+									.Select(e => e.ErrorMessage));
 
-				return BadRequest(errors);
+
+				return BadRequest(message);
 			}
 
 			//prevent closed projects to be opened again because all activity records will look for this flag
-			if(project.IsComplete == true && projectUpdateDTO.IsComplete == false) 
+			if(project.IsComplete == true) 
 			{
 				return BadRequest("Completed project cannot be modified");
 			}
