@@ -43,7 +43,7 @@ export default class Project extends React.Component {
 				<>
 				<Link to={`/projects/${this.props.match.params.id}/addactivity`}>ADD NEW ACTIVITY</Link>
 				<br/><br/>
-				<Link to={`/users/${this.props.match.params.id}/addproject`}>EDIT PROJECT (TODO)</Link>
+				<Link to={`/projects/${this.props.match.params.id}/edit`}>EDIT PROJECT</Link>
 				</>
 			}
 			<br/>

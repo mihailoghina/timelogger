@@ -6,6 +6,7 @@ import Users from './views/Users';
 import User from './views/User';
 import AddProject from './views/AddProject';
 import AddActivity from './views/AddActivity';
+import EditProject from './views/EditProject';
   
 export default function App() {
     return (
@@ -29,6 +30,7 @@ export default function App() {
                                 <Route exact path="/users/:id" component={User} />
                                 <Route exact path="/users/:id/addproject" component={AddProject} />
                                 <Route exact path="/projects/:id/addactivity" component={AddActivity} />
+                                <Route exact path="/projects/:id/edit" component={EditProject} />
                             </Switch>
                         </div>
                     </Router>                
