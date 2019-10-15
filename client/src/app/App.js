@@ -2,9 +2,10 @@ import React from 'react';
 import './style.css';
 import Project from './views/Project';
 import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-import UserProjects from './views/UserProjects';
 import Users from './views/Users';
 import User from './views/User';
+import AddProject from './views/AddProject';
+import AddActivity from './views/AddActivity';
   
 export default function App() {
     return (
@@ -21,15 +22,13 @@ export default function App() {
                 <div className="container">                       
                     <Router>
                         <div>
-                            <ul>
-                                <li><Link to="/">Users</Link></li>
-                            </ul>
-
                             <Switch>
                                 <Route exact path="/"><Users /></Route>
                                 <Route exact path="/project/:id" component={Project} />
                                 <Route exact path="/users" component={Users} />
                                 <Route exact path="/users/:id" component={User} />
+                                <Route exact path="/users/:id/addproject" component={AddProject} />
+                                <Route exact path="/projects/:id/addactivity" component={AddActivity} />
                             </Switch>
                         </div>
                     </Router>                

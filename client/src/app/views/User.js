@@ -3,6 +3,7 @@ import axios from 'axios';
 import {API_BASE_URL} from '../constants';
 import UserProjects from './UserProjects';
 import UserDetails from '../components/UserDetails';
+import {Link} from "react-router-dom";
 
 export default class User extends React.Component {
 
@@ -36,7 +37,11 @@ export default class User extends React.Component {
         return (
 			<>
             <UserDetails data = {user}/>
-            <br/><br/>
+            <br/>
+
+            <Link to={`/users/${this.props.match.params.id}/addproject`}>ADD NEW PROJECT</Link>
+
+            <br /><br />
             <p>User projects:</p>
             <UserProjects userId = {this.props.match.params.id} />		
 			</>

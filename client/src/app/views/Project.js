@@ -3,6 +3,7 @@ import axios from 'axios';
 import {API_BASE_URL} from '../constants';
 import ProjectDetails from '../components/ProjectDetails'
 import ProjectActivities from './ProjectActivities';
+import {Link} from "react-router-dom";
 
 export default class Project extends React.Component {
 
@@ -37,6 +38,17 @@ export default class Project extends React.Component {
         return (
 			<>
             <ProjectDetails data = {project} />
+	
+			{project.isComplete == false &&
+				<>
+				<Link to={`/projects/${this.props.match.params.id}/addactivity`}>ADD NEW ACTIVITY</Link>
+				<br/><br/>
+				<Link to={`/users/${this.props.match.params.id}/addproject`}>EDIT PROJECT (TODO)</Link>
+				</>
+			}
+			<br/>
+			<Link to={`/users/${this.props.match.params.id}/addproject`}>DELETE PROJECT (TODO)</Link>
+
 
 			<ProjectActivities projectId = {project.id} />
 			</>

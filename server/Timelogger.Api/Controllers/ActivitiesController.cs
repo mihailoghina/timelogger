@@ -71,6 +71,7 @@ namespace Timelogger.Api.Controllers
 			{
 				Id = Guid.NewGuid(),
                 ProjectId = createActivityDTO.ProjectId,
+				LoggedMinutes = createActivityDTO.LoggedMinutes,
 				Name = createActivityDTO.Name,
 				Description = createActivityDTO.Description,
 				CreatedBy = createActivityDTO.CreatedBy,
@@ -162,6 +163,7 @@ namespace Timelogger.Api.Controllers
 
 			activity.Name = activityUpdateDTO.Name;
 			activity.Description = activityUpdateDTO.Description;
+			activity.LoggedMinutes = activityUpdateDTO.LoggedMinutes;
 
 			_repositoryWrapper.ActivityRepository.Update(activity);
 
