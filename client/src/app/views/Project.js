@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {API_BASE_URL} from '../constants';
 import ProjectDetails from '../components/ProjectDetails'
+import ProjectActivities from './ProjectActivities';
 
 export default class Project extends React.Component {
 
@@ -21,7 +22,7 @@ export default class Project extends React.Component {
             url: `${API_BASE_URL}projects/${projectId}?includeTime=true`
           })
             .then(res => {
-                this.setState({ user: res.data, dataReady: true });
+                this.setState({ project: res.data, dataReady: true });
             })
             .catch(err => {
                 alert(`Status code: ${err.response.status} \n Message: ${err.response.data}`);
@@ -36,6 +37,8 @@ export default class Project extends React.Component {
         return (
 			<>
             <ProjectDetails data = {project} />
+
+			<ProjectActivities projectId = {project.id} />
 			</>
         )
     }
