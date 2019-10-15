@@ -1,27 +1,25 @@
 import React from 'react';
 import axios from 'axios';
-import {API_BASE_URL} from '../constants';
-import ProjectDetails from '../components/ProjectDetails'
+import {USER_ID, API_BASE_URL} from '../constants';
+import UsersTable from '../components/UsersTable'
 
-export default class Project extends React.Component {
+class Users extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-			project: "",
+			users: [],
 			dataReady: false
         };
 	}
 
     componentDidMount() {		
-		var projectId = this.props.match.params.id;
-
-		axios({
+        axios({
             method: "GET",
-            url: `${API_BASE_URL}projects/${projectId}?includeTime=true`
+            url: `${API_BASE_URL}users`
           })
             .then(res => {
-                this.setState({ user: res.data, dataReady: true });
+                this.setState({ users: res.data, dataReady: true });
             })
             .catch(err => {
                 alert(`Status code: ${err.response.status} \n Message: ${err.response.data}`);
@@ -29,14 +27,14 @@ export default class Project extends React.Component {
     }
     
     render() {
-		const {project, dataReady} = this.state;
+		const {users, dataReady} = this.state;
 
 		if(!dataReady) return null;  // if not checked will try to map undefined values
 
         return (
-			<>
-            <ProjectDetails data = {project} />
-			</>
+			<UsersTable data = {users} />
         )
     }
 }
+
+export default Users;

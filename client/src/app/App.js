@@ -3,6 +3,8 @@ import './style.css';
 import Project from './views/Project';
 import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import UserProjects from './views/UserProjects';
+import Users from './views/Users';
+import User from './views/User';
   
 export default function App() {
     return (
@@ -20,12 +22,14 @@ export default function App() {
                     <Router>
                         <div>
                             <ul>
-                                <li><Link to="/">User projects page</Link></li>
+                                <li><Link to="/">Users</Link></li>
                             </ul>
 
                             <Switch>
-                                <Route exact path="/"><UserProjects /></Route>
+                                <Route exact path="/"><Users /></Route>
                                 <Route exact path="/project/:id" component={Project} />
+                                <Route exact path="/users" component={Users} />
+                                <Route exact path="/users/:id" component={User} />
                             </Switch>
                         </div>
                     </Router>                
