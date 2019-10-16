@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {API_BASE_URL} from '../constants';
+import convertTime from '../convertTime';
 
 export default class EditProject extends React.Component {
 
@@ -9,13 +10,15 @@ export default class EditProject extends React.Component {
         this.state = {
             project: "",
             dataReady: false,
-            optionState: this.props.isCompleted
         };
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.change = this.change.bind(this);
+        this.nameChange = this.nameChange.bind(this);
+        this.completionChange = this.completionChange.bind(this);
+        this.deadLineChange = this.deadLineChange.bind(this);
       }
 
-      postDataToServer(name, deadline) {
+      postDataToServer(name, deadline, isComplete) {
+     
         axios({
             method: "PUT",
             url: `${API_BASE_URL}projects/${this.props.match.params.id}`,
@@ -25,8 +28,7 @@ export default class EditProject extends React.Component {
              data: {
                 name: name,
                 deadLineDate: deadline,
-                createdBy: this.props.match.params.id,
-                isCompleted: true   //TODO
+                isComplete: isComplete
              }
           })
             .then(res => {
@@ -39,16 +41,14 @@ export default class EditProject extends React.Component {
       }
 
       checkValidDate(date) {
-          return (new Date() < date);
+          return (new Date() < new Date(date));
       }
 
       handleSubmit(event) {
         event.preventDefault();
-        var name = document.getElementById("name").value;
-        var date = new Date(document.getElementById("deadLine").value);
-
-        if(this.checkValidDate(date)) {
-            this.postDataToServer(name, date);
+        var {project} = this.state;
+        if(this.checkValidDate(project.deadLineDate)) {
+            this.postDataToServer(project.name, new Date(project.deadLineDate), project.isComplete);
         } else {
             alert("you can not choose a date in the past");
         } 
@@ -69,12 +69,27 @@ export default class EditProject extends React.Component {
             });
     }
 
-    change(event) {
-        this.setState({ optionState: event.target.value});
+    completionChange(event) {
+        this.setState({ project:  Object.assign({}, this.state.project, {isComplete: event.target.value}) });
+    }
+
+    nameChange(event) {
+        this.setState({ project:  Object.assign({}, this.state.project, {name: event.target.value}) });
+    }
+
+    deadLineChange(event) {
+        this.setState({ project:  Object.assign({}, this.state.project, {deadLineDate: event.target.value}) });
+    }
+
+    transformDate(date) {
+        var d = new Date(date);
+        var mm = d.getMonth() + 1;
+        var dd = d.getDate();
+        var yy = d.getFullYear();
+        return `${yy}-${mm}-${dd}`
     }
 
     render() {
-        debugger;
         const {project, dataReady} = this.state;
 
         if(!dataReady) return null;
@@ -82,20 +97,21 @@ export default class EditProject extends React.Component {
         return (
             <>
             <form onSubmit={this.handleSubmit}>
+
                <label htmlFor="name">Name</label><br/>
-                <input minLength="5" type="text" id="name" value={project.name} /><br/>
+                <input minLength="5" type="text" id="name" value={project.name} onChange={this.nameChange}/><br/>
 
                 <label htmlFor="isCompleted">Is project completed</label><br />
-                <select id="isCompleted" onChange={this.change} value={project.isCompleted}>
-                    <option value="true" selected={project.isCompleted == false}>true</option>
-                    <option value="false" >false</option>
+                <select id="isCompleted" value={project.isComplete} onChange={this.completionChange}>
+                    <option value="true">true</option>
+                    <option value="false">false</option>
                 </select>
                 <br />
 
                 <label htmlFor="Deadline">Deadline</label><br/>
-                <input type="date" id="deadLine" value={project.deadlineDate} /><br/><br/>
+                <input type="date" id="deadLine" value={this.transformDate(project.deadLineDate)} onChange = {this.deadLineChange}/><br/><br/>
 
-                <input type="submit" value="Edit project" />
+                <input type="submit" value="Save changes" />
             </form>
             </>
         )

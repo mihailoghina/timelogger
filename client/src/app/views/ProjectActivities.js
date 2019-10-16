@@ -1,8 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 import {API_BASE_URL} from '../constants';
-import UserProjectsTable from '../components/UserProjectsTable'
 import ProjectActivitiesTable from '../components/ProjectActivitiesTable';
 
 export default class ProjectActivities extends React.Component {
@@ -16,8 +14,7 @@ export default class ProjectActivities extends React.Component {
     }
 
     componentDidMount() {        
-        debugger;
-        var a = this.props
+        
         axios({
             method: "GET",
             url: `${API_BASE_URL}projects/${this.props.projectId}/activities`

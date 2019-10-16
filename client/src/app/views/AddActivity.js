@@ -46,12 +46,16 @@ export default class AddActivity extends React.Component {
         return (
             <>
             <form onSubmit={this.handleSubmit}>
+
                <label htmlFor="name">Name</label><br/>
                 <input minLength="5" type="text" id="name"  /><br/>
-                <label htmlFor="loggedMinutes">Log minutes</label><br/>
+
+                <label htmlFor="loggedMinutes">Log time (minutes)</label><br/>
                 <input type="number" min="30" id="loggedMinutes"/><br/><br/>
+
                 <label htmlFor="description">Description (optional)</label><br/>
                 <input type="text" id="description"/><br/><br/>
+
                 <input type="submit" value="Add activity" />
             </form>
             </>

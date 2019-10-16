@@ -51,10 +51,13 @@ export default class AddProject extends React.Component {
         return (
             <>
             <form onSubmit={this.handleSubmit}>
+
                <label htmlFor="name">Name</label><br/>
                 <input minLength="5" type="text" id="name"  /><br/>
+
                 <label htmlFor="Deadline">Deadline</label><br/>
                 <input type="date" id="deadLine"/><br/><br/>
+                
                 <input type="submit" value="Add project" />
             </form>
             </>

@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {USER_ID, API_BASE_URL} from '../constants';
+import {API_BASE_URL} from '../constants';
 import UsersTable from '../components/UsersTable'
 
 class Users extends React.Component {

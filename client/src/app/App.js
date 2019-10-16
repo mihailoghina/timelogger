@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.css';
 import Project from './views/Project';
-import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Users from './views/Users';
 import User from './views/User';
 import AddProject from './views/AddProject';

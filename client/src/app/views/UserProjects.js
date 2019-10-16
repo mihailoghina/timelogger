@@ -1,10 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 import {API_BASE_URL} from '../constants';
 import UserProjectsTable from '../components/UserProjectsTable'
 
-class UserProjects extends React.Component {
+export default class UserProjects extends React.Component {
 
     constructor(props) {
         super(props);
@@ -15,8 +14,7 @@ class UserProjects extends React.Component {
     }
 
     componentDidMount() {        
-        debugger;
-        var a = this.props
+
         axios({
             method: "GET",
             url: `${API_BASE_URL}users/${this.props.userId}/projects?includeTime=true`
@@ -38,5 +36,3 @@ class UserProjects extends React.Component {
         )
     }
 }
-
-export default UserProjects;

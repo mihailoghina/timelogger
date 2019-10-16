@@ -1,16 +1,17 @@
 
 import {Link} from "react-router-dom";
 import React from 'react';
+import convertTime from '../convertTime'
 
 export default function ProjectActivitiesTable(props) {
-    debugger;
+
     return (
         <table className="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">Activity Name</th>
                     <th scope="col">Description</th>
-                    <th scope="col">Logged time (min)</th>
+                    <th scope="col">Logged time</th>
                     <th scope="col">Timestamp</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -21,9 +22,9 @@ export default function ProjectActivitiesTable(props) {
                     <tr key={activity.id}>
                         <td>{activity.name}</td>
                         <td>{activity.description}</td>
-                        <td>{activity.loggedMinutes}</td>
+                        <td>{convertTime(activity.loggedMinutes)}</td>
                         <td>{activity.creationDate}</td>
-                        <td><Link to={`/activities/${activity.id}`}>View</Link></td>
+                        <td><Link to={`/activities/${activity.id}`}>Edit / Delete</Link></td>
                     </tr>
                 )}
             </tbody>
