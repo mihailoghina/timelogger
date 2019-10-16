@@ -29,7 +29,7 @@ export default function App() {
 
                                 <Route exact path="/users" component={Users} />
                                 <Route exact path="/users/:id" component={User} />                        
-                                <Route exact path="/project/:id" component={Project} />                               
+                                <Route exact path="/projects/:id" component={Project} />                               
                                 <Route exact path="/users/:id/addproject" component={AddProject} />
                                 <Route exact path="/projects/:id/addactivity" component={AddActivity} />
                                 <Route exact path="/projects/:id/edit" component={EditProject} />

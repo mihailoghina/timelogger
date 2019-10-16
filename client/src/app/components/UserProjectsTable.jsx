@@ -26,7 +26,7 @@ export default function UserProjectsTable(props) {
                         <td>{proj.isComplete ? "yes" : "no"}</td>
                         <td>{convertTime(proj.loggedMinutes)}</td>
                         <td>{proj.creationDate}</td>
-                        <td><Link to={`/project/${proj.id}`}>View</Link></td>
+                        <td><Link to={`/projects/${proj.id}`}>View</Link></td>
                     </tr>
                 )}
             </tbody>
