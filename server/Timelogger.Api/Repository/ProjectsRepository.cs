@@ -21,12 +21,12 @@ namespace Timelogger.Api.Repository
 
         public IEnumerable<Project> GetEntitiesForParentId(Guid id)
         {
-            return _context.Projects.Where(_ => _.CreatedBy == id).OrderBy(_ => _.DeadLineDate);
+            return _context.Projects.Where(_ => _.CreatedBy == id).OrderBy(_ => _.IsComplete).ThenBy(_ => _.DeadLineDate);
         }
 
         public IEnumerable<Project> GetAll() 
         {           
-            return _context.Projects.OrderBy(_ => _.DeadLineDate);        
+            return _context.Projects.OrderBy(_ => _.IsComplete).ThenBy(_ => _.DeadLineDate);        
         } 
        
         public Project Add(Project project) 
