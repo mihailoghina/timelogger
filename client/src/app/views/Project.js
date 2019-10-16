@@ -77,7 +77,7 @@ export default class Project extends React.Component {
             <button onClick={this.deleteProject}>DELETE PROJECT</button>
             <br /><br />
 
-            <button onClick={this.historyBack}>Go to users list</button>
+            <button onClick={this.historyBack}>Go to user's project list</button>
             <br />
 
             <ProjectActivities 
