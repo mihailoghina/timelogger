@@ -37,6 +37,10 @@ export default class Project extends React.Component {
         }
     }
 
+    historyBack() {
+        window.history.back();
+    }
+
     componentDidMount() {		
 		var projectId = this.props.match.params.id;
 
@@ -71,9 +75,15 @@ export default class Project extends React.Component {
 			}
 			<br/>
             <button onClick={this.deleteProject}>DELETE PROJECT</button>
+            <br /><br />
+
+            <button onClick={this.historyBack}>Go to users list</button>
             <br />
 
-			<ProjectActivities projectId = {project.id} />
+            <ProjectActivities 
+                projectId = {project.id} 
+                isProjectComplete = {project.isComplete}
+                />
 			</>
         )
     }

@@ -32,7 +32,10 @@ export default class ProjectActivities extends React.Component {
         if(!this.state.dataReady) return null;
 
         return (
-            <ProjectActivitiesTable data = {this.state.projectActivities} />
+            <ProjectActivitiesTable 
+                data = {this.state.projectActivities} 
+                isProjectComplete = {this.props.isProjectComplete} 
+                />
         );
     }
 }
