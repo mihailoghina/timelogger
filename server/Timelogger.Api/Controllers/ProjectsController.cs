@@ -72,6 +72,11 @@ namespace Timelogger.Api.Controllers
 				return BadRequest(message);
 			}
 
+			if(createProjectDTO.DeadLineDate < DateTime.Now) 
+			{
+				return BadRequest("can not set a deadline in the past");
+			}
+
 			var project = new Project
 			{
 				Id = Guid.NewGuid(),
@@ -154,6 +159,11 @@ namespace Timelogger.Api.Controllers
 			}
 			else
 			{
+				if(projectUpdateDTO.DeadLineDate < DateTime.Now) 
+				{
+					return BadRequest("can not set a deadline in the past");
+				}
+
 				project.Name = projectUpdateDTO.Name;
 				project.IsComplete = projectUpdateDTO.IsComplete;
 				project.DeadLineDate = projectUpdateDTO.DeadLineDate;
