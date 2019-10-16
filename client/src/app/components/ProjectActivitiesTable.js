@@ -24,7 +24,7 @@ export default function ProjectActivitiesTable(props) {
                         <td>{activity.description}</td>
                         <td>{convertTime(activity.loggedMinutes)}</td>
                         <td>{activity.creationDate}</td>
-                        <td><Link to={`/activities/${activity.id}`}>Edit / Delete</Link></td>
+                        <td><Link to={`/activities/${activity.id}/edit`}>Edit / Delete</Link></td>
                     </tr>
                 )}
             </tbody>

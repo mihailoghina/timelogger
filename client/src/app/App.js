@@ -7,6 +7,7 @@ import User from './views/User';
 import AddProject from './views/AddProject';
 import AddActivity from './views/AddActivity';
 import EditProject from './views/EditProject';
+import EditActivity from './views/EditActivity';
   
 export default function App() {
     return (
@@ -25,12 +26,14 @@ export default function App() {
                         <div>
                             <Switch>
                                 <Route exact path="/"><Users /></Route>
-                                <Route exact path="/project/:id" component={Project} />
+
                                 <Route exact path="/users" component={Users} />
-                                <Route exact path="/users/:id" component={User} />
+                                <Route exact path="/users/:id" component={User} />                        
+                                <Route exact path="/project/:id" component={Project} />                               
                                 <Route exact path="/users/:id/addproject" component={AddProject} />
                                 <Route exact path="/projects/:id/addactivity" component={AddActivity} />
                                 <Route exact path="/projects/:id/edit" component={EditProject} />
+                                <Route exact path="/activities/:id/edit" component={EditActivity} />
                             </Switch>
                         </div>
                     </Router>                
