@@ -59,7 +59,7 @@ namespace Timelogger.Api.Controllers
 			//completed projects can be only deleted together with its activities
 			if(project.IsComplete == true)
 			{
-				return BadRequest("Cannot change activity of a closed project");
+				return BadRequest("Cannot create activity for a closed project");
 			}
 
 			if(project.CreatedBy != createActivityDTO.CreatedBy) 
@@ -109,7 +109,7 @@ namespace Timelogger.Api.Controllers
 			//completed projects can be only deleted together with its activities
 			if(project != null && project.IsComplete == true)
 			{
-				return BadRequest("Cannot delete activity of a closed project. Whole project can be closed");
+				return BadRequest("Cannot delete activity of a closed project. Whole project can be deleted");
 			}
 
 			_repositoryWrapper.ActivityRepository.Delete(activity);
